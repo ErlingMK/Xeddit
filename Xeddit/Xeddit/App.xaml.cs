@@ -1,16 +1,20 @@
-﻿using System;
+﻿using LightInject;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
-namespace Xreddit
+namespace Xeddit
 {
     public partial class App : Application
     {
+        private ServiceContainer m_container;
+
         public App()
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            m_container = new ServiceContainer(new ContainerOptions() {EnablePropertyInjection = false});
+            m_container.RegisterFrom<CompositionRoot>();
+
+            MainPage = m_container.GetInstance<MainPage>();
         }
 
         protected override void OnStart()

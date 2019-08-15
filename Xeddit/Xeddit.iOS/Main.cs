@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace Xreddit.iOS
+namespace Xeddit.iOS
 {
     public class Application
     {
