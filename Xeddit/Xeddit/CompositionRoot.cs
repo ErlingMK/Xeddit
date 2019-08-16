@@ -21,11 +21,12 @@ namespace Xeddit
 
         private void RegisterServices(IServiceRegistry serviceRegistry)
         {
-            serviceRegistry.Register<IHttpClient, HttpClient>(new PerContainerLifetime());
+            serviceRegistry.Register<IHttpClient, HttpClientWrapper>(new PerContainerLifetime());
             serviceRegistry.Register<IHttpFactory, HttpFactory>(new PerContainerLifetime());
 
             serviceRegistry.Register<IBrowser, Browser>();
-            serviceRegistry.Register<IAuthorizationRequest, AuthorizationRequest>();
+            serviceRegistry.Register<IAuthorizationRequest, AuthorizationRequest>(new PerContainerLifetime());
+            serviceRegistry.Register<ITokenRequest, TokenRequest>(new PerContainerLifetime());
         }
     }
 }

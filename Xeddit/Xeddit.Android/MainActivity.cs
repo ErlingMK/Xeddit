@@ -19,18 +19,29 @@ namespace Xeddit.Droid
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable })]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        private App m_app;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
-            var i = Intent;
-
             base.OnCreate(savedInstanceState);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+
+            m_app = new App();
+
+            if (Intent != null)
+            {
+                if (Intent.DataString != null)
+                {
+                    if (Intent.DataString.Contains("logincallback")) m_app.OnAuthorizationCallback(Intent.Data.Query);
+                }
+            }
+
+            LoadApplication(m_app);
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

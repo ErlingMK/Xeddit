@@ -6,6 +6,7 @@ namespace Xeddit
     public partial class App : Application
     {
         private ServiceContainer m_container;
+        private MainPage m_mainPage;
 
         public App()
         {
@@ -14,7 +15,7 @@ namespace Xeddit
             m_container = new ServiceContainer(new ContainerOptions() {EnablePropertyInjection = false});
             m_container.RegisterFrom<CompositionRoot>();
 
-            MainPage = m_container.GetInstance<MainPage>();
+            MainPage = m_mainPage = m_container.GetInstance<MainPage>();
         }
 
         protected override void OnStart()
@@ -30,6 +31,11 @@ namespace Xeddit
         protected override void OnResume()
         {
             // Handle when your app resumes
+        }
+
+        public async void OnAuthorizationCallback(string queries)
+        {
+            await m_mainPage.OnCallback(queries);
         }
     }
 }
