@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xreddit.Android", "Xreddit\Xreddit.Android\Xreddit.Android.csproj", "{F03FBAB8-2455-4363-996A-C0B533D67297}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xeddit.Android", "Xeddit\Xeddit.Android\Xeddit.Android.csproj", "{F03FBAB8-2455-4363-996A-C0B533D67297}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xreddit.iOS", "Xreddit\Xreddit.iOS\Xreddit.iOS.csproj", "{0C64893F-E9DF-43DB-B23D-095B8FAB04C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xeddit.iOS", "Xeddit\Xeddit.iOS\Xeddit.iOS.csproj", "{0C64893F-E9DF-43DB-B23D-095B8FAB04C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xreddit", "Xreddit\Xreddit\Xreddit.csproj", "{9FDAD4CE-36C6-4AAF-928D-251A594173BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xeddit", "Xeddit\Xeddit\Xeddit.csproj", "{9FDAD4CE-36C6-4AAF-928D-251A594173BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
