@@ -35,6 +35,16 @@ namespace Xeddit
             //var code = codeQuery.Split('=').Last();
 
             var token = await m_tokenRequest.GetJwt(callbackUri);
+
+            var id = 2;
+        }
+
+        private async void Button_OnClicked_AppOnly(object sender, EventArgs e)
+        {
+            m_tokenRequest.ApplicationOnly = true;
+            var token = await m_tokenRequest.GetJwt();
+
+            var id = 2;
         }
     }
 }

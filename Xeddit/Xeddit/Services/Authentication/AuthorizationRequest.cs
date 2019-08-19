@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
 using System.Web;
 using UriBuilder = System.UriBuilder;
@@ -26,14 +27,16 @@ namespace Xeddit.Services.Authentication
                 Host = "www.reddit.com",
                 Path = "api/v1/authorize.compact"};
 
-            var query = HttpUtility.ParseQueryString(string.Empty);
-            query["client_id"] = "5DPRO9Doai43XA";
-            query["response_type"] = "code";
-            query["state"] = "something"; // TODO: Randomly generate
-            query["redirect_uri"] = "com.moxnes.xeddit://logincallback";
-            query["duration"] = "permanent";
-            query["scope"] = "mysubreddits read submit";
-            uriBuilder.Query = query.ToString();
+            var queries = HttpUtility.ParseQueryString(uriBuilder.Query);
+                
+            queries["client_id"] = "5DPRO9Doai43XA";
+            queries["response_type"] = "code";
+            queries["state"] = "something";
+            queries["redirect_uri"] = "com.moxnes.xeddit://logincallback";
+            queries["duration"] = "permanent";
+            queries["scope"] = "mysubreddits read submit";
+
+            uriBuilder.Query = queries.ToString();
 
             return uriBuilder.Uri;
         }
