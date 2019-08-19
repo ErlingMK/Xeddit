@@ -11,8 +11,11 @@ namespace Xeddit.Services.Authentication
 {
     internal class TokenRequest : ITokenRequest
     {
-        public async Task<Tokens> GetJwt(string code)
+        public async Task<Tokens> GetJwt(string callbackQuery)
         {
+            var queriesCollection = System.Web.HttpUtility.ParseQueryString(callbackQuery);
+            var code = queriesCollection.Get("code");
+
             var pairs = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("grant_type", "authorization_code"),

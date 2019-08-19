@@ -33,9 +33,9 @@ namespace Xeddit
             // Handle when your app resumes
         }
 
-        public async void OnAuthorizationCallback(string queries)
+        public async void OnAuthorizationCallback(string callbackUri)
         {
-            await m_mainPage.OnCallback(queries);
+            await m_mainPage.OnCallback(callbackUri);
         }
     }
 }

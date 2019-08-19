@@ -33,12 +33,9 @@ namespace Xeddit.Droid
 
             m_app = new App();
 
-            if (Intent != null)
+            if (Intent?.DataString != null)
             {
-                if (Intent.DataString != null)
-                {
-                    if (Intent.DataString.Contains("logincallback")) m_app.OnAuthorizationCallback(Intent.Data.Query);
-                }
+                if (Intent.DataString.Contains("logincallback")) m_app.OnAuthorizationCallback(Intent.DataString);
             }
 
             LoadApplication(m_app);

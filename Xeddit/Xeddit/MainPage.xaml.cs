@@ -28,15 +28,13 @@ namespace Xeddit
             m_authorizationRequest.StartAuthRequest();
         }
 
-        public async Task OnCallback(string queries)
+        public async Task OnCallback(string callbackUri)
         {
-            var queryStrings = queries.Split('&');
-            var codeQuery = queryStrings.First(s => s.Contains("code"));
-            var code = codeQuery.Split('=').Last();
+            //var queryStrings = callbackUri.Split('&');
+            //var codeQuery = queryStrings.First(s => s.Contains("code"));
+            //var code = codeQuery.Split('=').Last();
 
-            var token = await m_tokenRequest.GetJwt(code);
-
-            var i = 2;
+            var token = await m_tokenRequest.GetJwt(callbackUri);
         }
     }
 }
