@@ -28,13 +28,27 @@ namespace Xeddit
             m_authorizationRequest.StartAuthRequest();
         }
 
-        public async Task OnCallback(string callbackUri)
+        public async Task OnCallback(Uri callbackUri)
         {
-            //var queryStrings = callbackUri.Split('&');
-            //var codeQuery = queryStrings.First(s => s.Contains("code"));
-            //var code = codeQuery.Split('=').Last();
+            var authorizationResponse = new AuthorizationResponse(callbackUri);
 
-            var token = await m_tokenRequest.GetJwt(callbackUri);
+            if (!authorizationResponse.ErrorOccured)
+            {
+                var token = await m_tokenRequest.GetJwt(authorizationResponse.Code);
+            }
+            else
+            {
+                return;
+            }
+
+        }
+
+        private async void Button_OnClicked_AppOnly(object sender, EventArgs e)
+        {
+            m_tokenRequest.ApplicationOnly = true;
+            var token = await m_tokenRequest.GetJwt();
+
+            var id = 2;
         }
     }
 }

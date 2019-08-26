@@ -1,4 +1,5 @@
-﻿using LightInject;
+﻿using System;
+using LightInject;
 using Xamarin.Forms;
 
 namespace Xeddit
@@ -33,7 +34,7 @@ namespace Xeddit
             // Handle when your app resumes
         }
 
-        public async void OnAuthorizationCallback(string callbackUri)
+        public async void OnAuthorizationCallback(Uri callbackUri)
         {
             await m_mainPage.OnCallback(callbackUri);
         }
