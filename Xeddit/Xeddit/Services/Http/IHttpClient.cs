@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Xeddit.Services
+namespace Xeddit.Services.Http
 {
-    internal interface IHttpClient
+    public interface IHttpClient
     {
-        Task GetAsync(Uri uri);
+        Task<string> GetAsync(Uri uri);
         Task PostAsync(Uri uri);
         Task PutAsync(Uri uri);
         Task DeleteAsync(Uri uri);

@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Xeddit.Services
+namespace Xeddit.Services.Http
 {
     internal class HttpClientWrapper : IHttpClient
     {
@@ -14,9 +14,11 @@ namespace Xeddit.Services
             m_actualHttpClient = new HttpClient();
         }
 
-        public Task GetAsync(Uri uri)
+        public async Task<string> GetAsync(Uri uri)
         {
-            return Task.CompletedTask;
+            var response = await m_actualHttpClient.GetAsync(uri);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync();
         }
 
         public Task PostAsync(Uri uri)

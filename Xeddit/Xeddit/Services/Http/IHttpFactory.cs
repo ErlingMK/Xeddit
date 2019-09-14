@@ -1,6 +1,6 @@
-﻿namespace Xeddit.Services
+﻿namespace Xeddit.Services.Http
 {
-    interface IHttpFactory
+    public interface IHttpFactory
     {
         IHttpClient Create();
     }
