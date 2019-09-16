@@ -9,11 +9,11 @@ namespace Xeddit.Models
 {
     public class LinkModel : ILinkModel
     {
-        private readonly IListingClient m_listingClient;
+        private readonly ILinkClient m_linkClient;
 
-        public LinkModel(IListingClient listingClient)
+        public LinkModel(ILinkClient linkClient)
         {
-            m_listingClient = listingClient;
+            m_linkClient = linkClient;
         }
 
         public Task<IList<Link>> GetLinksForSubredditAsync(Subreddit subreddit, PostCategories postCategory)

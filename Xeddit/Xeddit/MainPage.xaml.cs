@@ -17,14 +17,14 @@ namespace Xeddit
         private readonly IAuthorizationRequest m_authorizationRequest;
         private readonly ITokenRequest m_tokenRequest;
         private readonly ITokensContainer m_tokensContainer;
-        private readonly IListingClient m_listingClient;
+        private readonly ILinkClient m_linkClient;
 
-        public MainPage(IAuthorizationRequest authorizationRequest, ITokenRequest tokenRequest, ITokensContainer tokensContainer, IListingClient listingClient)
+        public MainPage(IAuthorizationRequest authorizationRequest, ITokenRequest tokenRequest, ITokensContainer tokensContainer, ILinkClient linkClient)
         {
             m_authorizationRequest = authorizationRequest;
             m_tokenRequest = tokenRequest;
             m_tokensContainer = tokensContainer;
-            m_listingClient = listingClient;
+            m_linkClient = linkClient;
             InitializeComponent();
         }
 
@@ -53,7 +53,7 @@ namespace Xeddit
             m_tokenRequest.ApplicationOnly = true;
             m_tokensContainer.Tokens = await m_tokenRequest.GetJwt();
 
-            var listing = await m_listingClient.GetListingAsync("/r/askreddit/hot");
+            var listing = await m_linkClient.GetLinksAsync("/r/askreddit/hot");
 
             var id = 2;
         }

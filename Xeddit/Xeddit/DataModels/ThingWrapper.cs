@@ -8,6 +8,6 @@ namespace Xeddit.DataModels
     public class ThingWrapper
     {
         public string Kind { get; set; }
-        public Link Data { get; set; } // Can be a Link, Comment etc. THINGS
+        public object Data { get; set; } // Can be a Link, Comment etc. THINGS
     }
 }

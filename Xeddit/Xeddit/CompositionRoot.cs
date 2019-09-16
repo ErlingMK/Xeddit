@@ -35,7 +35,7 @@ namespace Xeddit
 
         private void RegisterClients(IServiceRegistry serviceRegistry)
         {
-            serviceRegistry.Register<IListingClient, ListingClient>(new PerContainerLifetime());
+            serviceRegistry.Register<ILinkClient, LinkClient>(new PerContainerLifetime());
         }
     }
 }
