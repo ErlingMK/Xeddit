@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
+using Xeddit.Clients;
 using Xeddit.Services.Authentication;
 
 namespace Xeddit
@@ -15,11 +16,15 @@ namespace Xeddit
     {
         private readonly IAuthorizationRequest m_authorizationRequest;
         private readonly ITokenRequest m_tokenRequest;
+        private readonly ITokensContainer m_tokensContainer;
+        private readonly IListingClient m_listingClient;
 
-        public MainPage(IAuthorizationRequest authorizationRequest, ITokenRequest tokenRequest)
+        public MainPage(IAuthorizationRequest authorizationRequest, ITokenRequest tokenRequest, ITokensContainer tokensContainer, IListingClient listingClient)
         {
             m_authorizationRequest = authorizationRequest;
             m_tokenRequest = tokenRequest;
+            m_tokensContainer = tokensContainer;
+            m_listingClient = listingClient;
             InitializeComponent();
         }
 
@@ -34,7 +39,7 @@ namespace Xeddit
 
             if (!authorizationResponse.ErrorOccured)
             {
-                var token = await m_tokenRequest.GetJwt(authorizationResponse.Code);
+                m_tokensContainer.Tokens = await m_tokenRequest.GetJwt(authorizationResponse.Code);
             }
             else
             {
@@ -46,7 +51,9 @@ namespace Xeddit
         private async void Button_OnClicked_AppOnly(object sender, EventArgs e)
         {
             m_tokenRequest.ApplicationOnly = true;
-            var token = await m_tokenRequest.GetJwt();
+            m_tokensContainer.Tokens = await m_tokenRequest.GetJwt();
+
+            var listing = await m_listingClient.GetListingAsync("/r/askreddit/hot");
 
             var id = 2;
         }

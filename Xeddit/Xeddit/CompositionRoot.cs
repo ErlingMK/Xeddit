@@ -1,6 +1,8 @@
 ﻿using LightInject;
+using Xeddit.Clients;
 using Xeddit.Services;
 using Xeddit.Services.Authentication;
+using Xeddit.Services.Http;
 
 namespace Xeddit
 {
@@ -12,6 +14,7 @@ namespace Xeddit
 
             RegisterViews(serviceRegistry);
             RegisterServices(serviceRegistry);
+            RegisterClients(serviceRegistry);
         }
 
         private void RegisterViews(IServiceRegistry serviceRegistry)
@@ -27,6 +30,12 @@ namespace Xeddit
             serviceRegistry.Register<IBrowser, Browser>();
             serviceRegistry.Register<IAuthorizationRequest, AuthorizationRequest>(new PerContainerLifetime());
             serviceRegistry.Register<ITokenRequest, TokenRequest>(new PerContainerLifetime());
+            serviceRegistry.Register<ITokensContainer, TokensContainer>(new PerContainerLifetime());
+        }
+
+        private void RegisterClients(IServiceRegistry serviceRegistry)
+        {
+            serviceRegistry.Register<IListingClient, ListingClient>(new PerContainerLifetime());
         }
     }
 }
