@@ -30,11 +30,12 @@ namespace Xeddit
             serviceRegistry.Register<IBrowser, Browser>();
             serviceRegistry.Register<IAuthorizationRequest, AuthorizationRequest>(new PerContainerLifetime());
             serviceRegistry.Register<ITokenRequest, TokenRequest>(new PerContainerLifetime());
+            serviceRegistry.Register<ITokensContainer, TokensContainer>(new PerContainerLifetime());
         }
 
         private void RegisterClients(IServiceRegistry serviceRegistry)
         {
-            serviceRegistry.Register<IListingClient, ListingClient>();
+            serviceRegistry.Register<IListingClient, ListingClient>(new PerContainerLifetime());
         }
     }
 }

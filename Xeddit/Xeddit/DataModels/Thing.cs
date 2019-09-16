@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Xeddit.DataModels
+﻿namespace Xeddit.DataModels
 {
     /// <summary>
     /// The Reddit base class.
@@ -11,7 +7,5 @@ namespace Xeddit.DataModels
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public string Kind { get; set; }
-        public object Data { get; set; }
     }
 }

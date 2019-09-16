@@ -6,9 +6,10 @@ namespace Xeddit.DataModels
 {
     public class Listing
     {
-        public string Before { get; set; }
-        public string After { get; set; }
         public string ModHash { get; set; }
-        public IList<Thing> Children { get; set; }
+        public int Dist { get; set; }
+        public IList<ThingWrapper> Children { get; set; }
+        public string After { get; set; }
+        public string Before { get; set; }
     }
 }

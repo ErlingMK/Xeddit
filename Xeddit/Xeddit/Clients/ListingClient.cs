@@ -10,6 +10,7 @@ namespace Xeddit.Clients
 {
     public class ListingClient : IListingClient
     {
+        private readonly string m_baseAddress = "https://oauth.reddit.com";
         private readonly IHttpClient client;
 
         public ListingClient(IHttpFactory httpFactory)
@@ -17,8 +18,9 @@ namespace Xeddit.Clients
             client = httpFactory.Create();
         }
 
-        public async Task<ListingWrapper> GetListingAsync(Uri uri)
+        public async Task<ListingWrapper> GetListingAsync(string path, string query = null)
         {
+            var uri = new Uri(m_baseAddress + path + ".json");
             var json = await client.GetAsync(uri);
             return JsonConvert.DeserializeObject<ListingWrapper>(json);
         }
@@ -26,6 +28,6 @@ namespace Xeddit.Clients
 
     public interface IListingClient
     {
-        Task<ListingWrapper> GetListingAsync(Uri uri);
+        Task<ListingWrapper> GetListingAsync(string path, string query = null);
     }
 }

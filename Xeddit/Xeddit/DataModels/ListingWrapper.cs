@@ -6,8 +6,7 @@ namespace Xeddit.DataModels
 {
     public class ListingWrapper
     {
-        // Should always be Listing
-        public string Kind { get; set; }
+        public string Kind { get; set; } // Should always be a Listing
         public Listing Data { get; set; }
     }
 }

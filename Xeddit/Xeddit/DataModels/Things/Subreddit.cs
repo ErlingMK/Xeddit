@@ -7,7 +7,7 @@ namespace Xeddit.DataModels.Things
     /// <summary>
     /// Type prefix: t5
     /// </summary>
-    public class Subreddit : Thing
+    public class Subreddit : ThingWrapper
     {
         public int AccountsActive { get; private set; }
         public string Description { get; private set; }

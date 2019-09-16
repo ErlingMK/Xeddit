@@ -9,8 +9,7 @@
     <StackLayout>
         <!-- Place new controls here -->
         <Button Clicked="Button_OnClicked" Text="Auth code"></Button>
-        <Button Clicked="Button_OnClicked_AppOnly"></Button>
-        <Label Text="{Binding Token}"></Label>
+        <Button Clicked="Button_OnClicked_AppOnly" Text="No login"></Button>
     </StackLayout>
 
 </ContentPage>
