@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Android.Content;
+using Xamarin.Forms;
 using Xeddit.Droid;
 
 namespace Xeddit.Droid
@@ -28,6 +29,7 @@ namespace Xeddit.Droid
 
             base.OnCreate(savedInstanceState);
 
+            Forms.SetFlags("CollectionView_Experimental");
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 

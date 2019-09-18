@@ -1,6 +1,7 @@
 ﻿using System;
 using LightInject;
 using Xamarin.Forms;
+using Xeddit.Views;
 
 namespace Xeddit
 {
@@ -16,7 +17,10 @@ namespace Xeddit
             m_container = new ServiceContainer(new ContainerOptions() {EnablePropertyInjection = false});
             m_container.RegisterFrom<CompositionRoot>();
 
-            MainPage = m_mainPage = m_container.GetInstance<MainPage>();
+            //m_mainPage = m_container.GetInstance<MainPage>();
+            //MainPage = new NavigationPage(m_mainPage);
+
+            MainPage = m_container.GetInstance<MainPage>();
         }
 
         protected override void OnStart()
@@ -36,7 +40,7 @@ namespace Xeddit
 
         public async void OnAuthorizationCallback(Uri callbackUri)
         {
-            await m_mainPage.OnCallback(callbackUri);
+            //await m_mainPage.OnCallback(callbackUri);
         }
     }
 }
