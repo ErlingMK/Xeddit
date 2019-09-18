@@ -22,7 +22,7 @@ namespace Xeddit.Clients
 
         public async Task<Listing> GetLinksAsync(string path, string query = null)
         {
-            var uri = new Uri(m_baseAddress + path + ".json");
+            var uri = new Uri(m_baseAddress + path + ".json" + query);
             var json = await client.GetAsync(uri);
             var listingWrapper = JsonConvert.DeserializeObject<ListingWrapper>(json);
 

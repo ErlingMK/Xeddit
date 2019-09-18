@@ -7,10 +7,33 @@ using Xeddit.DataModels.Things.InterfacesForThings;
 
 namespace Xeddit.DataModels.Things
 {
+    public interface ILink
+    {
+        string Author { get; set; }
+        string Domain { get; set; }
+        bool IsSelf { get; set; }
+        int NumComments { get; set; }
+        bool Over18 { get; set; }
+        int Score { get; set; }
+        string SelfText { get; set; }
+        string Subreddit { get; set; }
+        string SubredditId { get; set; }
+        string Thumbnail { get; set; }
+        string Title { get; set; }
+        string Url { get; set; }
+        int Ups { get; set; }
+        int Downs { get; set; }
+        bool? Likes { get; set; }
+        long Created { get; set; }
+        long CreatedUtc { get; set; }
+        string Id { get; set; }
+        string Name { get; set; }
+    }
+
     /// <summary>
     /// Type prefix: t3
     /// </summary>
-    public class Link : Thing, IVotable, ICreated
+    public class Link : Thing, IVotable, ICreated, ILink
     {
         public string Author { get; set; }
         public string Domain { get; set; }

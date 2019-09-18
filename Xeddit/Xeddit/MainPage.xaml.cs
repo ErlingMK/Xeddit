@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xeddit.Clients;
 using Xeddit.Services.Authentication;
+using Xeddit.Views;
 
 namespace Xeddit
 {
@@ -18,13 +19,15 @@ namespace Xeddit
         private readonly ITokenRequest m_tokenRequest;
         private readonly ITokensContainer m_tokensContainer;
         private readonly ILinkClient m_linkClient;
+        private readonly SubredditPage m_subredditPage;
 
-        public MainPage(IAuthorizationRequest authorizationRequest, ITokenRequest tokenRequest, ITokensContainer tokensContainer, ILinkClient linkClient)
+        public MainPage(IAuthorizationRequest authorizationRequest, ITokenRequest tokenRequest, ITokensContainer tokensContainer, ILinkClient linkClient, SubredditPage subredditPage)
         {
             m_authorizationRequest = authorizationRequest;
             m_tokenRequest = tokenRequest;
             m_tokensContainer = tokensContainer;
             m_linkClient = linkClient;
+            m_subredditPage = subredditPage;
             InitializeComponent();
         }
 
@@ -40,6 +43,8 @@ namespace Xeddit
             if (!authorizationResponse.ErrorOccured)
             {
                 m_tokensContainer.Tokens = await m_tokenRequest.GetJwt(authorizationResponse.Code);
+
+                await Navigation.PushAsync(m_subredditPage);
             }
             else
             {
@@ -53,9 +58,7 @@ namespace Xeddit
             m_tokenRequest.ApplicationOnly = true;
             m_tokensContainer.Tokens = await m_tokenRequest.GetJwt();
 
-            var listing = await m_linkClient.GetLinksAsync("/r/askreddit/hot");
-
-            var id = 2;
+            await Navigation.PushAsync(m_subredditPage);
         }
     }
 }

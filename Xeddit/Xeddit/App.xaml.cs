@@ -16,7 +16,8 @@ namespace Xeddit
             m_container = new ServiceContainer(new ContainerOptions() {EnablePropertyInjection = false});
             m_container.RegisterFrom<CompositionRoot>();
 
-            MainPage = m_mainPage = m_container.GetInstance<MainPage>();
+            m_mainPage = m_container.GetInstance<MainPage>();
+            MainPage = new NavigationPage(m_mainPage);
         }
 
         protected override void OnStart()
