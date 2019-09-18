@@ -1,5 +1,6 @@
 ﻿using LightInject;
 using Xeddit.Clients;
+using Xeddit.Models;
 using Xeddit.Services;
 using Xeddit.Services.Authentication;
 using Xeddit.Services.Http;
@@ -20,6 +21,12 @@ namespace Xeddit
 
             RegisterServices(serviceRegistry);
             RegisterClients(serviceRegistry);
+            RegisterModels(serviceRegistry);
+        }
+
+        private void RegisterModels(IServiceRegistry serviceRegistry)
+        {
+            serviceRegistry.Register<ILinkModel, LinkModel>(new PerContainerLifetime());
         }
 
         private void RegisterViewModels(IServiceRegistry serviceRegistry)

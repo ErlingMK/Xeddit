@@ -32,7 +32,6 @@ namespace Xeddit.Views
         private void MenuItem_OnClicked(object sender, EventArgs e)
         {
             SubredditSearchEntry.IsVisible = true;
-            SubredditSearchEntry.Focus();
         }
     }
 }

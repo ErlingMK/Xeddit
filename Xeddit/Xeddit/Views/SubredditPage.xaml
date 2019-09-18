@@ -23,7 +23,7 @@
                    IsVisible="False"
                    Placeholder="search for subreddit"
                    Text="{Binding SearchedForSubreddit}"
-                   ReturnCommand="{Binding SearchForSubredditCommand}"/>
+                   ReturnCommand="{Binding SearchForSubredditCommand}" />
 
             <CollectionView ItemsSource="{Binding Links}">
                 <CollectionView.ItemTemplate>
@@ -53,6 +53,9 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+            <Button Text="Next"
+                    Command="{Binding NextPageCommand}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

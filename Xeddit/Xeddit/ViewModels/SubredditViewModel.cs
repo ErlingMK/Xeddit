@@ -9,6 +9,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xeddit.Clients;
 using Xeddit.DataModels.Things;
+using Xeddit.Models;
+using Xeddit.Services.Authentication;
 using Xeddit.ViewModels.Base;
 using Xeddit.ViewModels.Interfaces;
 
@@ -16,25 +18,30 @@ namespace Xeddit.ViewModels
 {
     public class SubredditViewModel : BaseViewModel, ISubredditViewModel
     {
-        private readonly ILinkClient m_linkClient;
+        private readonly ITokenRequest m_tokenRequest;
+        private readonly ILinkModel m_linkModel;
+        private readonly ITokensContainer m_tokesContainer;
         private string m_after;
-        private int m_count;
-        private List<Link> m_links;
+        private IList<Link> m_links;
         private string m_currentSubreddit;
 
-        public SubredditViewModel(ILinkClient linkClient)
+        private const string m_defaultSubreddit = "popular";
+
+        public SubredditViewModel(ITokenRequest tokenRequest, ILinkModel linkModel, ITokensContainer tokesContainer)
         {
-            m_linkClient = linkClient;
+            m_tokenRequest = tokenRequest;
+            m_linkModel = linkModel;
+            m_tokesContainer = tokesContainer;
 
             Links = new List<Link>();
             CurrentSubreddit = "popular";
 
             SearchForSubredditCommand = new Command(async () => await SearchForSubreddit());
+
+            NextPageCommand = new Command(async () => await NextPage());
         }
 
-
-
-        public List<Link> Links
+        public IList<Link> Links
         {
             get => m_links;
             set => SetProperty(ref m_links, value);
@@ -50,19 +57,26 @@ namespace Xeddit.ViewModels
 
         public async Task Initialize()
         {
-            var linksListing = await m_linkClient.GetLinksAsync("/r/popular/hot");
-            m_after = linksListing.After;
-            m_count = linksListing.Dist;
+            m_tokenRequest.ApplicationOnly = true;
+            m_tokesContainer.Tokens = await m_tokenRequest.GetJwt();
 
-            Links = linksListing.Children.Select(thingWrapper => thingWrapper.Data as Link).ToList();
-        }
+            Links = await m_linkModel.GetLinksForSubredditAsync(m_defaultSubreddit, LinkCategory.Hot, limit: 50);
+        }   
         private async Task SearchForSubreddit()
         {
-            var linksListing = await m_linkClient.GetLinksAsync($"/r/{SearchedForSubreddit}/hot");
+            Links = await m_linkModel.GetLinksForSubredditAsync(SearchedForSubreddit, LinkCategory.Hot, limit: 50);
+
             CurrentSubreddit = SearchedForSubreddit;
-            Links = linksListing.Children.Select(thingWrapper => thingWrapper.Data as Link).ToList();
+        }
+
+        private async Task NextPage()
+        {
+            Links.Clear();
+
+            Links = await m_linkModel.GetLinksForSubredditAsync(m_currentSubreddit, LinkCategory.Hot, limit: 50);
         }
 
         public ICommand SearchForSubredditCommand { get; set; }
+        public ICommand NextPageCommand { get; set; }
     }
 }
