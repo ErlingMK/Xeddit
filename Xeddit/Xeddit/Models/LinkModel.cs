@@ -19,7 +19,7 @@ namespace Xeddit.Models
             m_linkClient = linkClient;
         }
 
-        public async Task<IList<Link>> GetLinksForSubredditAsync(string subreddit, LinkCategory linkCategory, int count = -1, int limit = -1)
+        public async Task<List<Link>> GetLinksForSubredditAsync(string subreddit, LinkCategory linkCategory, int count = -1, int limit = -1)
         {
             var queryString = BuildQuery(m_after, before: null, count, limit);
             var pathString = $"/r/{subreddit}/";
@@ -77,7 +77,7 @@ namespace Xeddit.Models
 
     public interface ILinkModel
     {
-        Task<IList<Link>> GetLinksForSubredditAsync(string subreddit, LinkCategory linkCategory, int count = -1, int limit = -1);
+        Task<List<Link>> GetLinksForSubredditAsync(string subreddit, LinkCategory linkCategory, int count = -1, int limit = -1);
     }
 
     public enum LinkCategory

@@ -10,19 +10,22 @@
              mc:Ignorable="dblend"
              x:Class="Xeddit.Views.SubredditPage"
              dblend:DataContext="{dblend:DesignInstance ViewModels:ISubredditViewModel}"
-             Title="{Binding CurrentSubreddit}">
+             Title="{Binding CurrentSubreddit}"
+             BackgroundColor="Black">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Search" Clicked="MenuItem_OnClicked" />
+        <ToolbarItem Text="Search" Clicked="SearchItem_OnClicked" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
         <StackLayout>
 
             <Entry x:Name="SubredditSearchEntry"
-                   IsVisible="False"
+                   IsVisible="{Binding SearchEntryIsVisible}"
                    Placeholder="search for subreddit"
                    Text="{Binding SearchedForSubreddit}"
+                   TextColor="White"
+                   PlaceholderColor="White"
                    ReturnCommand="{Binding SearchForSubredditCommand}" />
 
             <CollectionView ItemsSource="{Binding Links}">
@@ -40,22 +43,26 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0"
-                                   Text="{Binding Title}" />
+                                   Text="{Binding Title}"
+                                   TextColor="White"/>
 
                             <Label Grid.Row="1" Grid.Column="0"
-                                   Text="{Binding Author}" />
+                                   Text="{Binding Author}"
+                                   TextColor="DarkGray"/>
 
                             <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
                                    VerticalOptions="CenterAndExpand"
-                                   Text="{Binding Score}" />
-
+                                   Text="{Binding Score}"
+                                   TextColor="DarkGray"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
             <Button Text="Next"
-                    Command="{Binding NextPageCommand}" />
+                    Command="{Binding NextPageCommand}" 
+                    HorizontalOptions="EndAndExpand"/>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

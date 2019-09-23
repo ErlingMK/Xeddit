@@ -10,9 +10,10 @@ namespace Xeddit.ViewModels.Interfaces
 {
     public interface ISubredditViewModel
     {
-        IList<Link> Links { get; set; }
+        List<Link> Links { get; set; }
         string CurrentSubreddit { get; set; }
         string SearchedForSubreddit { get; set; }
+        bool SearchEntryIsVisible { get; set; }
         Task Initialize();
         ICommand SearchForSubredditCommand { get; set; }
         ICommand NextPageCommand { get; set; }

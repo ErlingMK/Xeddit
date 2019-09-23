@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -21,9 +22,9 @@ namespace Xeddit.ViewModels
         private readonly ITokenRequest m_tokenRequest;
         private readonly ILinkModel m_linkModel;
         private readonly ITokensContainer m_tokesContainer;
-        private string m_after;
-        private IList<Link> m_links;
+        private List<Link> m_links;
         private string m_currentSubreddit;
+        private bool m_searchEntryIsVisible;
 
         private const string m_defaultSubreddit = "popular";
 
@@ -34,14 +35,14 @@ namespace Xeddit.ViewModels
             m_tokesContainer = tokesContainer;
 
             Links = new List<Link>();
-            CurrentSubreddit = "popular";
+            CurrentSubreddit = m_defaultSubreddit;
 
             SearchForSubredditCommand = new Command(async () => await SearchForSubreddit());
 
             NextPageCommand = new Command(async () => await NextPage());
         }
 
-        public IList<Link> Links
+        public List<Link> Links
         {
             get => m_links;
             set => SetProperty(ref m_links, value);
@@ -49,22 +50,32 @@ namespace Xeddit.ViewModels
 
         public string CurrentSubreddit
         {
-            get => $"r/{m_currentSubreddit}";
+            get => $"r/{m_currentSubreddit}"; 
             set => SetProperty(ref m_currentSubreddit, value);
         }
 
         public string SearchedForSubreddit { get; set; }
+        public int NumberOfLinks { get; set; }
+        public bool SearchEntryIsVisible
+        {
+            get => m_searchEntryIsVisible;
+            set => SetProperty(ref m_searchEntryIsVisible, value);
+        }
 
         public async Task Initialize()
         {
             m_tokenRequest.ApplicationOnly = true;
             m_tokesContainer.Tokens = await m_tokenRequest.GetJwt();
 
-            Links = await m_linkModel.GetLinksForSubredditAsync(m_defaultSubreddit, LinkCategory.Hot, limit: 50);
+            Links = await m_linkModel.GetLinksForSubredditAsync(m_defaultSubreddit, LinkCategory.Hot, limit: 25);
+
+            NumberOfLinks = Links.Count;
         }   
         private async Task SearchForSubreddit()
         {
-            Links = await m_linkModel.GetLinksForSubredditAsync(SearchedForSubreddit, LinkCategory.Hot, limit: 50);
+            Links = await m_linkModel.GetLinksForSubredditAsync(SearchedForSubreddit, LinkCategory.Hot, limit: 25);
+
+            Device.BeginInvokeOnMainThread(() => SearchEntryIsVisible = false);
 
             CurrentSubreddit = SearchedForSubreddit;
         }
@@ -73,7 +84,7 @@ namespace Xeddit.ViewModels
         {
             Links.Clear();
 
-            Links = await m_linkModel.GetLinksForSubredditAsync(m_currentSubreddit, LinkCategory.Hot, limit: 50);
+            Links = await m_linkModel.GetLinksForSubredditAsync(m_currentSubreddit, LinkCategory.Hot, limit: 25);
         }
 
         public ICommand SearchForSubredditCommand { get; set; }

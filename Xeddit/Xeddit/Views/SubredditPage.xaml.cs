@@ -29,9 +29,10 @@ namespace Xeddit.Views
             m_subredditViewModel.Initialize();
         }
 
-        private void MenuItem_OnClicked(object sender, EventArgs e)
+        private void SearchItem_OnClicked(object sender, EventArgs e)
         {
-            SubredditSearchEntry.IsVisible = true;
+            m_subredditViewModel.SearchEntryIsVisible = true;
+            SubredditSearchEntry.Focus();
         }
     }
 }
