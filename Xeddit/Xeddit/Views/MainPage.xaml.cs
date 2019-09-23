@@ -12,11 +12,12 @@ namespace Xeddit.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : TabbedPage
     {
-        public MainPage(SubredditPage subredditPage)
+        public MainPage(SubredditPage subredditPage, UserPage userPage)
         {
             InitializeComponent();
 
-            Children.Add(new NavigationPage(subredditPage){Title = "asdasd"});
+            Children.Add(new NavigationPage(subredditPage){Title = "Posts", BarBackgroundColor = Color.DarkGray});
+            Children.Add(new NavigationPage(userPage){Title = "User",  BarBackgroundColor = Color.DarkGray});
         }
     }
 }

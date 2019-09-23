@@ -6,5 +6,6 @@
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              android:TabbedPage.ToolbarPlacement="Bottom"
              mc:Ignorable="d"
-             x:Class="Xeddit.Views.MainPage">
+             x:Class="Xeddit.Views.MainPage"
+             BarBackgroundColor="DarkGray">
 </TabbedPage>

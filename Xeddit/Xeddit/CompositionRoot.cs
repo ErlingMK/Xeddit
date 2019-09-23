@@ -38,6 +38,7 @@ namespace Xeddit
         {
             serviceRegistry.Register<MainPage>();
             serviceRegistry.Register<SubredditPage>();
+            serviceRegistry.Register<UserPage>();
         }
 
         private void RegisterServices(IServiceRegistry serviceRegistry)
