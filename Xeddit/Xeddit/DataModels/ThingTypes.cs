@@ -6,6 +6,7 @@ namespace Xeddit.DataModels
 {
     public class ThingTypes
     {
-        public static readonly string Link = "t3";
+        public const string Link = "t3";
+        public const string Comment = "t1";
     }
 }

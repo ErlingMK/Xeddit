@@ -28,6 +28,7 @@ namespace Xeddit.DataModels.Things
         long CreatedUtc { get; set; }
         string Id { get; set; }
         string Name { get; set; }
+        string Permalink { get; set; }
     }
 
     /// <summary>
@@ -52,5 +53,6 @@ namespace Xeddit.DataModels.Things
         public bool? Likes { get; set; }
         public long Created { get; set; }
         public long CreatedUtc { get; set; }
+        public string Permalink { get; set; }
     }
 }

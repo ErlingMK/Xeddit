@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
-using Xeddit.Clients;
 using Xeddit.DataModels.Things;
 using Xeddit.Models;
 using Xeddit.Services.Authentication;
@@ -19,20 +12,22 @@ namespace Xeddit.ViewModels
 {
     public class SubredditViewModel : BaseViewModel, ISubredditViewModel
     {
-        private readonly ITokenRequest m_tokenRequest;
+        private const string m_defaultSubreddit = "popular";
+        private readonly ICommentsViewModel m_commentsViewModel;
         private readonly ILinkModel m_linkModel;
+        private readonly ITokenRequest m_tokenRequest;
         private readonly ITokensContainer m_tokesContainer;
-        private List<Link> m_links;
         private string m_currentSubreddit;
+        private List<Link> m_links;
         private bool m_searchEntryIsVisible;
 
-        private const string m_defaultSubreddit = "popular";
-
-        public SubredditViewModel(ITokenRequest tokenRequest, ILinkModel linkModel, ITokensContainer tokesContainer)
+        public SubredditViewModel(ITokenRequest tokenRequest, ILinkModel linkModel, ITokensContainer tokesContainer,
+            ICommentsViewModel commentsViewModel)
         {
             m_tokenRequest = tokenRequest;
             m_linkModel = linkModel;
             m_tokesContainer = tokesContainer;
+            m_commentsViewModel = commentsViewModel;
 
             Links = new List<Link>();
             CurrentSubreddit = m_defaultSubreddit;
@@ -40,7 +35,11 @@ namespace Xeddit.ViewModels
             SearchForSubredditCommand = new Command(async () => await SearchForSubreddit());
 
             NextPageCommand = new Command(async () => await NextPage());
+
+            LinkSelectedCommand = new Command(async () => await LinkSelected());
         }
+
+        public int NumberOfLinks { get; set; }
 
         public List<Link> Links
         {
@@ -50,12 +49,13 @@ namespace Xeddit.ViewModels
 
         public string CurrentSubreddit
         {
-            get => $"r/{m_currentSubreddit}"; 
+            get => $"r/{m_currentSubreddit}";
             set => SetProperty(ref m_currentSubreddit, value);
         }
 
         public string SearchedForSubreddit { get; set; }
-        public int NumberOfLinks { get; set; }
+        public ILink SelectedLink { get; set; }
+
         public bool SearchEntryIsVisible
         {
             get => m_searchEntryIsVisible;
@@ -70,7 +70,12 @@ namespace Xeddit.ViewModels
             Links = await m_linkModel.GetLinksForSubredditAsync(m_defaultSubreddit, LinkCategory.Hot, limit: 25);
 
             NumberOfLinks = Links.Count;
-        }   
+        }
+
+        public ICommand SearchForSubredditCommand { get; set; }
+        public ICommand NextPageCommand { get; set; }
+        public ICommand LinkSelectedCommand { get; set; }
+
         private async Task SearchForSubreddit()
         {
             Links = await m_linkModel.GetLinksForSubredditAsync(SearchedForSubreddit, LinkCategory.Hot, limit: 25);
@@ -87,7 +92,9 @@ namespace Xeddit.ViewModels
             Links = await m_linkModel.GetLinksForSubredditAsync(m_currentSubreddit, LinkCategory.Hot, limit: 25);
         }
 
-        public ICommand SearchForSubredditCommand { get; set; }
-        public ICommand NextPageCommand { get; set; }
+        private async Task LinkSelected()
+        {
+            m_commentsViewModel.PreloadComments(SelectedLink.Permalink);
+        }
     }
 }

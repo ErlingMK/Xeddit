@@ -1,5 +1,6 @@
 ﻿using LightInject;
 using Xeddit.Clients;
+using Xeddit.DataModels.Things;
 using Xeddit.Models;
 using Xeddit.Services;
 using Xeddit.Services.Authentication;
@@ -27,11 +28,13 @@ namespace Xeddit
         private void RegisterModels(IServiceRegistry serviceRegistry)
         {
             serviceRegistry.Register<ILinkModel, LinkModel>(new PerContainerLifetime());
+            serviceRegistry.Register<ICommentsModel, CommentsModel>(new PerContainerLifetime());
         }
 
         private void RegisterViewModels(IServiceRegistry serviceRegistry)
         {
             serviceRegistry.Register<ISubredditViewModel, SubredditViewModel>();
+            serviceRegistry.Register<ICommentsViewModel, CommentsViewModel>();
         }
 
         private void RegisterViews(IServiceRegistry serviceRegistry)
@@ -39,6 +42,7 @@ namespace Xeddit
             serviceRegistry.Register<MainPage>();
             serviceRegistry.Register<SubredditPage>();
             serviceRegistry.Register<UserPage>();
+            serviceRegistry.Register<CommentsPage>();
         }
 
         private void RegisterServices(IServiceRegistry serviceRegistry)
@@ -46,7 +50,7 @@ namespace Xeddit
             serviceRegistry.Register<IHttpClient, HttpClientWrapper>(new PerContainerLifetime());
             serviceRegistry.Register<IHttpFactory, HttpFactory>(new PerContainerLifetime());
 
-            serviceRegistry.Register<IBrowser, Browser>();
+            serviceRegistry.Register<IBrowser, Browser>(new PerContainerLifetime());
             serviceRegistry.Register<IAuthorizationRequest, AuthorizationRequest>(new PerContainerLifetime());
             serviceRegistry.Register<ITokenRequest, TokenRequest>(new PerContainerLifetime());
             serviceRegistry.Register<ITokensContainer, TokensContainer>(new PerContainerLifetime());
@@ -55,6 +59,7 @@ namespace Xeddit
         private void RegisterClients(IServiceRegistry serviceRegistry)
         {
             serviceRegistry.Register<ILinkClient, LinkClient>(new PerContainerLifetime());
+            serviceRegistry.Register<ICommentClient, CommentClient>(new PerContainerLifetime());
         }
     }
 }
