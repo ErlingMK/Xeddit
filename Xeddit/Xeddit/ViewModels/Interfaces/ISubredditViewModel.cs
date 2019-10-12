@@ -14,8 +14,10 @@ namespace Xeddit.ViewModels.Interfaces
         string CurrentSubreddit { get; set; }
         string SearchedForSubreddit { get; set; }
         bool SearchEntryIsVisible { get; set; }
+        ILink SelectedLink { get; set; }
         Task Initialize();
         ICommand SearchForSubredditCommand { get; set; }
         ICommand NextPageCommand { get; set; }
+        ICommand LinkSelectedCommand { get; set; }
     }
 }

@@ -13,17 +13,17 @@ namespace Xeddit.Clients
     public class LinkClient : ILinkClient
     {
         private readonly string m_baseAddress = "https://oauth.reddit.com";
-        private readonly IHttpClient client;
+        private readonly IHttpClient m_client;
 
         public LinkClient(IHttpFactory httpFactory)
         {
-            client = httpFactory.Create();
+            m_client = httpFactory.Create();
         }
 
         public async Task<Listing> GetLinksAsync(string path, string query = null)
         {
             var uri = new Uri(m_baseAddress + path + ".json" + query);
-            var json = await client.GetAsync(uri);
+            var json = await m_client.GetAsync(uri);
             var listingWrapper = JsonConvert.DeserializeObject<ListingWrapper>(json);
 
             foreach (var thingWrapper in listingWrapper.Data.Children)

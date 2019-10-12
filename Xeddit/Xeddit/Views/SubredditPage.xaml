@@ -8,8 +8,8 @@
              xmlns:ViewModels="clr-namespace:Xeddit.ViewModels.Interfaces;assembly=Xeddit"
              xmlns:DataModels="clr-namespace:Xeddit.DataModels.Things;assembly=Xeddit"
              mc:Ignorable="dblend"
-             x:Class="Xeddit.Views.SubredditPage"
              dblend:DataContext="{dblend:DesignInstance ViewModels:ISubredditViewModel}"
+             x:Class="Xeddit.Views.SubredditPage"
              Title="{Binding CurrentSubreddit}"
              BackgroundColor="Black">
 
@@ -28,7 +28,11 @@
                    PlaceholderColor="White"
                    ReturnCommand="{Binding SearchForSubredditCommand}" />
 
-            <CollectionView ItemsSource="{Binding Links}">
+            <CollectionView ItemsSource="{Binding Links}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedLink}"
+                            SelectionChangedCommand="{Binding LinkSelectedCommand}"
+                            SelectionChanged="SelectionChanged_NavigateTo">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid Padding="15"

@@ -13,10 +13,12 @@ namespace Xeddit.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SubredditPage : ContentPage
     {
+        private readonly CommentsPage m_commentsPage;
         private readonly ISubredditViewModel m_subredditViewModel;
 
-        public SubredditPage(ISubredditViewModel subredditViewModel)
+        public SubredditPage(ISubredditViewModel subredditViewModel, CommentsPage commentsPage)
         {
+            m_commentsPage = commentsPage;
             InitializeComponent();
 
             BindingContext = m_subredditViewModel = subredditViewModel;
@@ -33,6 +35,11 @@ namespace Xeddit.Views
         {
             m_subredditViewModel.SearchEntryIsVisible = true;
             SubredditSearchEntry.Focus();
+        }
+
+        private void SelectionChanged_NavigateTo(object sender, SelectionChangedEventArgs e)
+        {
+            Navigation.PushAsync(m_commentsPage);
         }
     }
 }
