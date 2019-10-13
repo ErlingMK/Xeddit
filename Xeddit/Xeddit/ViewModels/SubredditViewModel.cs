@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -20,6 +21,8 @@ namespace Xeddit.ViewModels
         private string m_currentSubreddit;
         private List<Link> m_links;
         private bool m_searchEntryIsVisible;
+        private List<Link> m_currentLinks;
+        private List<Link> m_actual;
 
         public SubredditViewModel(ITokenRequest tokenRequest, ILinkModel linkModel, ITokensContainer tokesContainer,
             ICommentsViewModel commentsViewModel)
@@ -43,8 +46,8 @@ namespace Xeddit.ViewModels
 
         public List<Link> Links
         {
-            get => m_links;
-            set => SetProperty(ref m_links, value);
+            get => m_actual;
+            set => SetProperty(ref m_actual, value);
         }
 
         public string CurrentSubreddit
@@ -67,7 +70,24 @@ namespace Xeddit.ViewModels
             m_tokenRequest.ApplicationOnly = true;
             m_tokesContainer.Tokens = await m_tokenRequest.GetJwt();
 
-            Links = await m_linkModel.GetLinksForSubredditAsync(m_defaultSubreddit, LinkCategory.Hot, limit: 25);
+            m_links = await m_linkModel.GetLinksForSubredditAsync(m_defaultSubreddit, LinkCategory.Hot, limit: 25);
+
+            m_actual = new List<Link>();
+            foreach (var link in m_links)
+            {
+                if (link.Thumbnail != "self" && link.Thumbnail != "default" && link.Thumbnail != "nsfw" &&
+                    link.Thumbnail != "spoiler")
+                {
+                    link.ThumbnailAsUri = ImageSource.FromUri(new Uri(link.Thumbnail));
+                    m_actual.Add(link);
+                }
+            }
+            //m_links.ForEach(l =>
+            //{
+            //    if (l.Thumbnail != "self") l.ThumbnailAsUri = new Uri(l.Thumbnail);
+            //});
+            
+            Links = m_actual;
 
             NumberOfLinks = Links.Count;
         }
@@ -94,7 +114,7 @@ namespace Xeddit.ViewModels
 
         private async Task LinkSelected()
         {
-            m_commentsViewModel.PreloadComments(SelectedLink.Permalink);
+            //m_commentsViewModel.PreloadComments(SelectedLink.Permalink);
         }
     }
 }

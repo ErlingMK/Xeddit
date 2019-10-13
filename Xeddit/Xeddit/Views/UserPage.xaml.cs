@@ -16,5 +16,10 @@ namespace Xeddit.Views
         {
             InitializeComponent();
         }
+
+        private void Entry_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            InitialsView.Name = Entry.Text;
+        }
     }
 }

@@ -7,11 +7,11 @@
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ViewModels="clr-namespace:Xeddit.ViewModels.Interfaces;assembly=Xeddit"
              xmlns:DataModels="clr-namespace:Xeddit.DataModels.Things;assembly=Xeddit"
+             xmlns:Controls="clr-namespace:Xeddit.Views.Components;assembly=Xeddit"
              mc:Ignorable="dblend"
              dblend:DataContext="{dblend:DesignInstance ViewModels:ISubredditViewModel}"
              x:Class="Xeddit.Views.SubredditPage"
-             Title="{Binding CurrentSubreddit}"
-             BackgroundColor="Black">
+             Title="{Binding CurrentSubreddit}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Search" Clicked="SearchItem_OnClicked" />
@@ -28,44 +28,26 @@
                    PlaceholderColor="White"
                    ReturnCommand="{Binding SearchForSubredditCommand}" />
 
-            <CollectionView ItemsSource="{Binding Links}"
-                            SelectionMode="Single"
-                            SelectedItem="{Binding SelectedLink}"
-                            SelectionChangedCommand="{Binding LinkSelectedCommand}"
-                            SelectionChanged="SelectionChanged_NavigateTo">
-                <CollectionView.ItemTemplate>
+            <Label Text="Image UriSource Xaml" />
+            <Image Source="https://b.thumbs.redditmedia.com/fICix0DnUO40PEM5WB285jY6Sv7-ephP3u-vNtzeQTg.jpg" />
+            <Label Text="example-app.png gets downloaded from xamarin.com" />
+
+            <!--<CollectionView ItemsSource="{Binding Links}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate >
                     <DataTemplate>
-                        <Grid Padding="15"
-                              dblend:DataContext="{dblend:DesignInstance DataModels:ILink}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Label Grid.Row="0" Grid.Column="0"
-                                   Text="{Binding Title}"
-                                   TextColor="White"/>
-
-                            <Label Grid.Row="1" Grid.Column="0"
-                                   Text="{Binding Author}"
-                                   TextColor="DarkGray"/>
-
-                            <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
-                                   VerticalOptions="CenterAndExpand"
-                                   Text="{Binding Score}"
-                                   TextColor="DarkGray"/>
-                        </Grid>
+                        --><!--<Controls:PostListObject
+                            dblend:DataContext="{dblend:DesignInstance DataModels:ILink}"
+                            Title="{Binding Title}"
+                            Author="{Binding Author}"
+                            Score="{Binding Score}"/>--><!--
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>
+            </CollectionView>-->
 
             <Button Text="Next"
-                    Command="{Binding NextPageCommand}" 
-                    HorizontalOptions="EndAndExpand"/>
+                    Command="{Binding NextPageCommand}"
+                    HorizontalOptions="EndAndExpand" />
 
         </StackLayout>
     </ContentPage.Content>
