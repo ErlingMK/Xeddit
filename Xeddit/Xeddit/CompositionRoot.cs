@@ -43,7 +43,6 @@ namespace Xeddit
         {
             serviceRegistry.Register<TabbedPage>();
             serviceRegistry.Register<SubredditPage>();
-            serviceRegistry.Register<UserPage>();
             serviceRegistry.Register<CommentsPage>();
         }
 
