@@ -5,11 +5,11 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xeddit.DataModels.Things;
 using Xeddit.Models;
-using Xeddit.Services.Authentication;
+using Xeddit.Services.Authentication.Abstractions;
 using Xeddit.ViewModels.Base;
-using Xeddit.ViewModels.Interfaces;
+using Xeddit.Views.Comments;
 
-namespace Xeddit.ViewModels
+namespace Xeddit.Views.Front
 {
     public class SubredditViewModel : BaseViewModel, ISubredditViewModel
     {

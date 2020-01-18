@@ -5,11 +5,11 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ViewModels="clr-namespace:Xeddit.ViewModels.Interfaces;assembly=Xeddit"
              xmlns:DataModels="clr-namespace:Xeddit.DataModels.Things;assembly=Xeddit"
+             xmlns:comments="clr-namespace:Xeddit.Views.Comments;assembly=Xeddit"
              mc:Ignorable="dblend"
-             dblend:DataContext="{dblend:DesignInstance ViewModels:ICommentsViewModel}"
-             x:Class="Xeddit.Views.CommentsPage">
+             dblend:DataContext="{dblend:DesignInstance comments:ICommentsViewModel}"
+             x:Class="Xeddit.Views.Comments.CommentsPage">
     <ContentPage.Content>
         <CollectionView>
             <CollectionView.ItemTemplate>

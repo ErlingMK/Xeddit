@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xeddit.Views.Front;
 
 namespace Xeddit.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CommentsPage : ContentPage
+    public partial class TabbedPage : Xamarin.Forms.TabbedPage
     {
-        public CommentsPage()
+        public TabbedPage(SubredditPage subredditPage)
         {
             InitializeComponent();
+
+            Children.Add(new NavigationPage(subredditPage){Title = "Posts", BarBackgroundColor = Color.DarkGray});
         }
     }
 }

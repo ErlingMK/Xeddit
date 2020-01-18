@@ -5,12 +5,11 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ViewModels="clr-namespace:Xeddit.ViewModels.Interfaces;assembly=Xeddit"
              xmlns:DataModels="clr-namespace:Xeddit.DataModels.Things;assembly=Xeddit"
              xmlns:Controls="clr-namespace:Xeddit.Views.Components;assembly=Xeddit"
              mc:Ignorable="dblend"
-             dblend:DataContext="{dblend:DesignInstance ViewModels:ISubredditViewModel}"
-             x:Class="Xeddit.Views.SubredditPage"
+             dblend:DataContext="{dblend:DesignInstance frontPage:ISubredditViewModel}"
+             x:Class="Xeddit.Views.Front.SubredditPage"
              Title="{Binding CurrentSubreddit}">
 
     <ContentPage.ToolbarItems>
@@ -28,22 +27,13 @@
                    PlaceholderColor="White"
                    ReturnCommand="{Binding SearchForSubredditCommand}" />
 
-            <Label Text="Image UriSource Xaml" />
-            <Image Source="https://b.thumbs.redditmedia.com/fICix0DnUO40PEM5WB285jY6Sv7-ephP3u-vNtzeQTg.jpg" />
-            <Label Text="example-app.png gets downloaded from xamarin.com" />
-
-            <!--<CollectionView ItemsSource="{Binding Links}"
+            <CollectionView ItemsSource="{Binding Links}"
                             SelectionMode="None">
-                <CollectionView.ItemTemplate >
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        --><!--<Controls:PostListObject
-                            dblend:DataContext="{dblend:DesignInstance DataModels:ILink}"
-                            Title="{Binding Title}"
-                            Author="{Binding Author}"
-                            Score="{Binding Score}"/>--><!--
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>-->
+            </CollectionView>
 
             <Button Text="Next"
                     Command="{Binding NextPageCommand}"

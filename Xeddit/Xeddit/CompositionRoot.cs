@@ -4,10 +4,12 @@ using Xeddit.DataModels.Things;
 using Xeddit.Models;
 using Xeddit.Services;
 using Xeddit.Services.Authentication;
+using Xeddit.Services.Authentication.Abstractions;
 using Xeddit.Services.Http;
 using Xeddit.ViewModels;
-using Xeddit.ViewModels.Interfaces;
 using Xeddit.Views;
+using Xeddit.Views.Comments;
+using Xeddit.Views.Front;
 
 namespace Xeddit
 {
@@ -39,7 +41,7 @@ namespace Xeddit
 
         private void RegisterViews(IServiceRegistry serviceRegistry)
         {
-            serviceRegistry.Register<MainPage>();
+            serviceRegistry.Register<TabbedPage>();
             serviceRegistry.Register<SubredditPage>();
             serviceRegistry.Register<UserPage>();
             serviceRegistry.Register<CommentsPage>();

@@ -5,17 +5,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Web;
+using Xeddit.Services.Authentication.Abstractions;
 
 namespace Xeddit.Services.Authentication
 {
-    public interface IAuthorizationResponse
-    {
-        string Code { get; }
-        string State { get; }
-        bool ErrorOccured { get; }
-        bool UserDeniedAccess { get; }
-    }
-
     public class AuthorizationResponse : IAuthorizationResponse
     {
         public AuthorizationResponse(Uri callbackUri)
