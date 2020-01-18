@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Xeddit.DataModels.Things;
 
-namespace Xeddit.ViewModels.Interfaces
+namespace Xeddit.Views.Comments
 {
     public interface ICommentsViewModel
     {

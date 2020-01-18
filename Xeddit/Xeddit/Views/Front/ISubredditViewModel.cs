@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xeddit.DataModels.Things;
 
-namespace Xeddit.ViewModels.Interfaces
+namespace Xeddit.Views.Front
 {
     public interface ISubredditViewModel
     {

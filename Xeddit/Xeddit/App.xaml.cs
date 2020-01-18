@@ -2,13 +2,14 @@
 using LightInject;
 using Xamarin.Forms;
 using Xeddit.Views;
+using TabbedPage = Xeddit.Views.TabbedPage;
 
 namespace Xeddit
 {
     public partial class App : Application
     {
         private ServiceContainer m_container;
-        private MainPage m_mainPage;
+        private TabbedPage m_tabbedPage;
 
         public App()
         {
@@ -17,10 +18,10 @@ namespace Xeddit
             m_container = new ServiceContainer(new ContainerOptions() {EnablePropertyInjection = false});
             m_container.RegisterFrom<CompositionRoot>();
 
-            //m_mainPage = m_container.GetInstance<MainPage>();
-            //MainPage = new NavigationPage(m_mainPage);
+            //m_tabbedPage = m_container.GetInstance<TabbedPage>();
+            //TabbedPage = new NavigationPage(m_tabbedPage);
 
-            MainPage = m_container.GetInstance<MainPage>();
+            MainPage = m_container.GetInstance<TabbedPage>();
         }
 
         protected override void OnStart()
@@ -40,7 +41,7 @@ namespace Xeddit
 
         public async void OnAuthorizationCallback(Uri callbackUri)
         {
-            //await m_mainPage.OnCallback(callbackUri);
+            //await m_tabbedPage.OnCallback(callbackUri);
         }
     }
 }

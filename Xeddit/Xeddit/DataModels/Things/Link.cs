@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Xamarin.Forms;
 using Xeddit.DataModels.Things.InterfacesForThings;
 
 namespace Xeddit.DataModels.Things
@@ -19,6 +20,7 @@ namespace Xeddit.DataModels.Things
         string Subreddit { get; set; }
         string SubredditId { get; set; }
         string Thumbnail { get; set; }
+        ImageSource ThumbnailAsUri { get; set; }
         string Title { get; set; }
         string Url { get; set; }
         int Ups { get; set; }
@@ -46,6 +48,7 @@ namespace Xeddit.DataModels.Things
         public string Subreddit { get; set; }
         public string SubredditId { get; set; }
         public string Thumbnail { get; set; }
+        public ImageSource ThumbnailAsUri { get; set; }
         public string Title { get; set; }
         public string Url { get; set; }
         public int Ups { get; set; }

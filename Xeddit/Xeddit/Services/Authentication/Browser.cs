@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
+using Xeddit.Services.Authentication.Abstractions;
 
 namespace Xeddit.Services.Authentication
 {
@@ -16,10 +17,5 @@ namespace Xeddit.Services.Authentication
                 TitleMode = BrowserTitleMode.Show
             });
         }
-    }
-
-    internal interface IBrowser
-    {
-        Task GetAsync(Uri uri);
     }
 }

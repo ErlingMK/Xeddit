@@ -8,6 +8,7 @@ using System.Web;
 using Newtonsoft.Json;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xeddit.Services.Authentication.Abstractions;
 
 namespace Xeddit.Services.Authentication
 {
@@ -90,11 +91,5 @@ namespace Xeddit.Services.Authentication
 
             return request;
         }
-    }
-
-    public interface ITokenRequest
-    {
-        bool ApplicationOnly { get; set; }
-        Task<Tokens> GetJwt(string code = null);
     }
 }

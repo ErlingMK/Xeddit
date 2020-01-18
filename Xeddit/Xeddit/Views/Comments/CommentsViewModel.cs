@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Xeddit.DataModels.Things;
 using Xeddit.Models;
 using Xeddit.ViewModels.Base;
-using Xeddit.ViewModels.Interfaces;
 
-namespace Xeddit.ViewModels
+namespace Xeddit.Views.Comments
 {
     public class CommentsViewModel : BaseViewModel, ICommentsViewModel
     {

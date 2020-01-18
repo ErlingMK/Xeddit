@@ -2,15 +2,11 @@
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using System.Web;
+using Xeddit.Services.Authentication.Abstractions;
 using UriBuilder = System.UriBuilder;
 
 namespace Xeddit.Services.Authentication
 {
-    public interface IAuthorizationRequest
-    {
-        Task StartAuthRequest();
-    }
-
     internal class AuthorizationRequest : IAuthorizationRequest
     {
         private readonly IBrowser m_browser;

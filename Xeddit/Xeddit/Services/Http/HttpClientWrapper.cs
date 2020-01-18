@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xeddit.Services.Authentication;
+using Xeddit.Services.Authentication.Abstractions;
 
 namespace Xeddit.Services.Http
 {
