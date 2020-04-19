@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xeddit.DataModels.Things.Contracts;
+using Xeddit.DataModels.Wrappers;
 
 namespace Xeddit.DataModels.Things
 {
     /// <summary>
     /// Type prefix: t5
     /// </summary>
-    public class Subreddit : ThingWrapper
+    public class Subreddit : Thing, ISubreddit
     {
         public int AccountsActive { get; private set; }
         public string Description { get; private set; }

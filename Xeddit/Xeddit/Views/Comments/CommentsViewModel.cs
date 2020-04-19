@@ -1,32 +1,34 @@
-﻿using System.Collections.Generic;
-using Xeddit.DataModels.Things;
-using Xeddit.Models;
-using Xeddit.ViewModels.Base;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using Xeddit.Clients;
+using Xeddit.DataModels.Things.Contracts;
 
 namespace Xeddit.Views.Comments
 {
-    public class CommentsViewModel : BaseViewModel, ICommentsViewModel
+    public class CommentsViewModel : ICommentsViewModel
     {
-        private readonly ICommentsModel m_commentsModel;
-        private IList<Comment> m_comments;
+        private readonly ICommentsService m_commentsService;
 
-        public CommentsViewModel(ICommentsModel commentsModel)
+        public CommentsViewModel(ICommentsService commentsService)
         {
-            m_commentsModel = commentsModel;
-        }
-
-        public async void PreloadComments(string permalink)
-        {
-            var comments = await m_commentsModel.GetCommentsForPostAsync(permalink);
-
-            Comments = comments;
+            m_commentsService = commentsService;
         }
 
         public ILink CurrentLink { get; set; }
-        public IList<Comment> Comments
+
+        public async Task LoadComments(ILink link)
         {
-            get => m_comments;
-            set => SetProperty(ref m_comments, value);
+            CurrentLink = link;
+
+            var comments = await m_commentsService.GetComments(link);
         }
+    }
+
+    public interface ICommentsViewModel
+    {
+        ILink CurrentLink { get; }
+        Task LoadComments(ILink link);
     }
 }

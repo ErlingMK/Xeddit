@@ -1,7 +1,9 @@
 ﻿using LightInject;
+using Xamarin.Forms;
 using Xeddit.Clients;
 using Xeddit.DataModels.Things;
-using Xeddit.Models;
+using Xeddit.DataModels.Things.Contracts;
+using Xeddit.Mappers;
 using Xeddit.Services;
 using Xeddit.Services.Authentication;
 using Xeddit.Services.Authentication.Abstractions;
@@ -10,6 +12,7 @@ using Xeddit.ViewModels;
 using Xeddit.Views;
 using Xeddit.Views.Comments;
 using Xeddit.Views.Front;
+using Xeddit.Views.Front.ViewModel;
 
 namespace Xeddit
 {
@@ -21,29 +24,20 @@ namespace Xeddit
 
             RegisterViews(serviceRegistry);
             RegisterViewModels(serviceRegistry);
-
             RegisterServices(serviceRegistry);
-            RegisterClients(serviceRegistry);
-            RegisterModels(serviceRegistry);
-        }
-
-        private void RegisterModels(IServiceRegistry serviceRegistry)
-        {
-            serviceRegistry.Register<ILinkModel, LinkModel>(new PerContainerLifetime());
-            serviceRegistry.Register<ICommentsModel, CommentsModel>(new PerContainerLifetime());
         }
 
         private void RegisterViewModels(IServiceRegistry serviceRegistry)
         {
-            serviceRegistry.Register<ISubredditViewModel, SubredditViewModel>();
-            serviceRegistry.Register<ICommentsViewModel, CommentsViewModel>();
+            serviceRegistry.Register<ISubredditViewModel, SubredditViewModel>(new PerContainerLifetime());
+            serviceRegistry.Register<ICommentsViewModel, CommentsViewModel>(new PerContainerLifetime());
         }
 
         private void RegisterViews(IServiceRegistry serviceRegistry)
         {
-            serviceRegistry.Register<TabbedPage>();
             serviceRegistry.Register<SubredditPage>();
             serviceRegistry.Register<CommentsPage>();
+            serviceRegistry.Register(fac => new NavigationPage(fac.GetInstance<SubredditPage>()), new PerContainerLifetime());
         }
 
         private void RegisterServices(IServiceRegistry serviceRegistry)
@@ -54,13 +48,12 @@ namespace Xeddit
             serviceRegistry.Register<IBrowser, Browser>(new PerContainerLifetime());
             serviceRegistry.Register<IAuthorizationRequest, AuthorizationRequest>(new PerContainerLifetime());
             serviceRegistry.Register<ITokenRequest, TokenRequest>(new PerContainerLifetime());
+            serviceRegistry.Register<ILinkService, LinkService>();
+            serviceRegistry.Register<ICommentsService, CommentsService>();
             serviceRegistry.Register<ITokensContainer, TokensContainer>(new PerContainerLifetime());
+            serviceRegistry.Register<IThingMapper, ThingMapper>();
+            serviceRegistry.Register<INavigationService, NavigationService>(new PerContainerLifetime());
         }
 
-        private void RegisterClients(IServiceRegistry serviceRegistry)
-        {
-            serviceRegistry.Register<ILinkClient, LinkClient>(new PerContainerLifetime());
-            serviceRegistry.Register<ICommentClient, CommentClient>(new PerContainerLifetime());
-        }
     }
 }

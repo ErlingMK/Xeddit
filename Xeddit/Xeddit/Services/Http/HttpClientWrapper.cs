@@ -11,6 +11,7 @@ namespace Xeddit.Services.Http
     {
         private readonly ITokensContainer m_tokensContainer;
         private HttpClient m_actualHttpClient;
+        private readonly string m_baseAddress = "https://oauth.reddit.com";
 
         public HttpClientWrapper(ITokensContainer tokensContainer)
         {
@@ -18,8 +19,9 @@ namespace Xeddit.Services.Http
             m_actualHttpClient = new HttpClient();
         }
 
-        public async Task<string> GetAsync(Uri uri)
+        public async Task<string> GetAsync(string path)
         {
+            var uri = new Uri($"{m_baseAddress}{path}.json");
             m_actualHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", m_tokensContainer.Tokens.AccessToken);
 
             var response = await m_actualHttpClient.GetAsync(uri);

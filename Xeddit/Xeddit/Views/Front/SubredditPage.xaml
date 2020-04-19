@@ -1,44 +1,96 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:DataModels="clr-namespace:Xeddit.DataModels.Things;assembly=Xeddit"
-             xmlns:Controls="clr-namespace:Xeddit.Views.Components;assembly=Xeddit"
+             xmlns:ViewModel="clr-namespace:Xeddit.Views.Front.ViewModel;assembly=Xeddit"
+             xmlns:dxui="http://dips.xamarin.ui.com"
+             xmlns:Contracts="clr-namespace:Xeddit.DataModels.Things.Contracts;assembly=Xeddit"
              mc:Ignorable="dblend"
-             dblend:DataContext="{dblend:DesignInstance frontPage:ISubredditViewModel}"
+             dblend:DataContext="{dblend:DesignInstance ViewModel:ISubredditViewModel}"
              x:Class="Xeddit.Views.Front.SubredditPage"
-             Title="{Binding CurrentSubreddit}">
+             x:Name="contentPage">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Search" Clicked="SearchItem_OnClicked" />
-    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="LinkTemplate"
+                          x:DataType="{x:Type Contracts:ILink}">
+                <ViewCell>
+                    <Frame Padding="10,10,5,10"
+                           Margin="10"
+                           CornerRadius="10">
 
-    <ContentPage.Content>
-        <StackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={x:Reference contentPage}, Path=BindingContext.GoToCommentsCommand}"
+                                CommandParameter="{Binding }" />
+                        </Frame.GestureRecognizers>
 
-            <Entry x:Name="SubredditSearchEntry"
-                   IsVisible="{Binding SearchEntryIsVisible}"
-                   Placeholder="search for subreddit"
-                   Text="{Binding SearchedForSubreddit}"
-                   TextColor="White"
-                   PlaceholderColor="White"
-                   ReturnCommand="{Binding SearchForSubredditCommand}" />
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-            <CollectionView ItemsSource="{Binding Links}"
-                            SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                            <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="{Binding Score}"
+                                   TextColor="Green" />
 
-            <Button Text="Next"
-                    Command="{Binding NextPageCommand}"
-                    HorizontalOptions="EndAndExpand" />
+                            <Label Grid.Row="0"
+                                   Grid.Column="1"
+                                   Text="{Binding PrefixedSubreddit}"
+                                   FontAttributes="Italic" />
 
-        </StackLayout>
-    </ContentPage.Content>
+                            <Label Grid.Row="1"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   Margin="0,0,15,0"
+                                   Text="{Binding Title}" />
+
+                            <ImageButton Grid.Row="0"
+                                         Grid.Column="2"
+                                         Grid.RowSpan="2"
+                                         Scale="1.5"
+                                         VerticalOptions="Start"
+                                         IsVisible="{Binding HasThumbnail}"
+                                         Source="{Binding Thumbnail}" />
+
+                            <Label Grid.Row="2"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   Text="{Binding Author}"
+                                   FontAttributes="Italic" />
+                        </Grid>
+                    </Frame>
+                </ViewCell>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <Grid>
+        <ListView IsVisible="{Binding IsBusy, Converter={dxui:InvertedBoolConverter}}"
+                  ItemsSource="{Binding Links}"
+                  ItemTemplate="{StaticResource LinkTemplate}"
+                  HasUnevenRows="True"
+                  SeparatorVisibility="None"
+                  SelectionMode="None"
+                  CachingStrategy="RecycleElement" />
+
+        <ActivityIndicator VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           IsRunning="True"
+                           IsVisible="{Binding IsBusy}" />
+    </Grid>
+
 </ContentPage>
