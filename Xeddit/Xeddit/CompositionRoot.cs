@@ -31,6 +31,7 @@ namespace Xeddit
         {
             serviceRegistry.Register<ISubredditViewModel, SubredditViewModel>(new PerContainerLifetime());
             serviceRegistry.Register<ICommentsViewModel, CommentsViewModel>(new PerContainerLifetime());
+            serviceRegistry.Register<IContextViewModel, ContextViewModel>(new PerContainerLifetime());
         }
 
         private void RegisterViews(IServiceRegistry serviceRegistry)

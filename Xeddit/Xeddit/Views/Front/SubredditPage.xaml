@@ -7,90 +7,24 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ViewModel="clr-namespace:Xeddit.Views.Front.ViewModel;assembly=Xeddit"
-             xmlns:dxui="http://dips.xamarin.ui.com"
-             xmlns:Contracts="clr-namespace:Xeddit.DataModels.Things.Contracts;assembly=Xeddit"
+             xmlns:Front="clr-namespace:Xeddit.Views.Front;assembly=Xeddit"
+             xmlns:Views="clr-namespace:Xeddit.Views;assembly=Xeddit"
              mc:Ignorable="dblend"
-             dblend:DataContext="{dblend:DesignInstance ViewModel:ISubredditViewModel}"
+             dblend:DataContext="{dblend:DesignInstance Views:IContextViewModel}"
              x:Class="Xeddit.Views.Front.SubredditPage"
+             x:DataType="{x:Type Views:IContextViewModel}"
              x:Name="contentPage">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <DataTemplate x:Key="LinkTemplate"
-                          x:DataType="{x:Type Contracts:ILink}">
-                <ViewCell>
-                    <Frame Padding="10,10,5,10"
-                           Margin="10"
-                           CornerRadius="10">
+    <Views:BackDrop FrontLayerOffset="50"
+                    BindingContext="{Binding Current}">
 
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Command="{Binding Source={x:Reference contentPage}, Path=BindingContext.GoToCommentsCommand}"
-                                CommandParameter="{Binding }" />
-                        </Frame.GestureRecognizers>
+        <Views:BackDrop.BackLayerContent>
+            <Front:SubredditBackView />
+        </Views:BackDrop.BackLayerContent>
 
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+        <Views:BackDrop.FrontLayerContent>
+            <Front:SubredditFrontView />
+        </Views:BackDrop.FrontLayerContent>
 
-                            <Label Grid.Row="0"
-                                   Grid.Column="0"
-                                   Text="{Binding Score}"
-                                   TextColor="Green" />
-
-                            <Label Grid.Row="0"
-                                   Grid.Column="1"
-                                   Text="{Binding PrefixedSubreddit}"
-                                   FontAttributes="Italic" />
-
-                            <Label Grid.Row="1"
-                                   Grid.Column="0"
-                                   Grid.ColumnSpan="2"
-                                   Margin="0,0,15,0"
-                                   Text="{Binding Title}" />
-
-                            <ImageButton Grid.Row="0"
-                                         Grid.Column="2"
-                                         Grid.RowSpan="2"
-                                         Scale="1.5"
-                                         VerticalOptions="Start"
-                                         IsVisible="{Binding HasThumbnail}"
-                                         Source="{Binding Thumbnail}" />
-
-                            <Label Grid.Row="2"
-                                   Grid.Column="0"
-                                   Grid.ColumnSpan="2"
-                                   Text="{Binding Author}"
-                                   FontAttributes="Italic" />
-                        </Grid>
-                    </Frame>
-                </ViewCell>
-            </DataTemplate>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
-
-    <Grid>
-        <ListView IsVisible="{Binding IsBusy, Converter={dxui:InvertedBoolConverter}}"
-                  ItemsSource="{Binding Links}"
-                  ItemTemplate="{StaticResource LinkTemplate}"
-                  HasUnevenRows="True"
-                  SeparatorVisibility="None"
-                  SelectionMode="None"
-                  CachingStrategy="RecycleElement" />
-
-        <ActivityIndicator VerticalOptions="Center"
-                           HorizontalOptions="Center"
-                           IsRunning="True"
-                           IsVisible="{Binding IsBusy}" />
-    </Grid>
-
+    </Views:BackDrop>
 </ContentPage>

@@ -21,11 +21,6 @@ namespace Xeddit.DataModels.Things.Contracts
         string Thumbnail { get; set; }
         string Title { get; set; }
         string Url { get; set; }
-        int Ups { get; set; }
-        int Downs { get; set; }
-        bool? Likes { get; set; }
-        long Created { get; set; }
-        long CreatedUtc { get; set; }
         string Permalink { get; set; }
         bool IsExpanded { get; set; }
         bool HasThumbnail { get; }

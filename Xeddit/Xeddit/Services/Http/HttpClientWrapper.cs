@@ -21,7 +21,7 @@ namespace Xeddit.Services.Http
 
         public async Task<string> GetAsync(string path)
         {
-            var uri = new Uri($"{m_baseAddress}{path}.json");
+            var uri = new Uri($"{m_baseAddress}{path}");
             m_actualHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", m_tokensContainer.Tokens.AccessToken);
 
             var response = await m_actualHttpClient.GetAsync(uri);

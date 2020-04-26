@@ -2,8 +2,8 @@
 {
     public interface IVotable
     {
-        int Ups { get; set; }
-        int Downs { get; set; }
+        int? Ups { get; set; }
+        int? Downs { get; set; }
         bool? Likes { get; set; }
     }
 }

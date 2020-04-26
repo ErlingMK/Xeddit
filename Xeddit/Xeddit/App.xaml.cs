@@ -21,7 +21,7 @@ namespace Xeddit
             m_container.RegisterInstance(typeof(IServiceContainer), m_container);
             m_container.RegisterFrom<CompositionRoot>();
 
-            MainPage = m_container.GetInstance<NavigationPage>();
+            MainPage = m_container.GetInstance<SubredditPage>();
         }
 
         protected override async void OnStart()

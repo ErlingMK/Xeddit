@@ -11,9 +11,13 @@ namespace Xeddit.Views.Front.ViewModel
 {
     public interface ISubredditViewModel : INotifyPropertyChanged
     {
-        ObservableCollection<ILink> Links { get; set; }
+        RangeObservableCollection<ILink> Links { get; set; }
         Task Initialize();
         bool IsBusy { get; }
-        IAsyncCommand<ILink> GoToCommentsCommand { get; }
+        IAsyncCommand NextLinksCommand { get; }
+        string SubredditSearchString { get; }
+        IAsyncCommand NewSubredditCommand { get; }
+        string CurrentSubreddit { get; }
+        ICommand GoToCommentsCommand { get; }
     }
 }

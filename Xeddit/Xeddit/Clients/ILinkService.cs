@@ -5,6 +5,6 @@ namespace Xeddit.Clients
 {
     public interface ILinkService
     {
-        Task<Listing> GetLinkListingAsync(string path, string query = null);
+        Task<Listing> GetLinkListingAsync(string subreddit, bool reset = false);
     }
 }

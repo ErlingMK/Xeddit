@@ -1,0 +1,39 @@
+﻿<?xml version="1.0"
+      encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ViewModel="clr-namespace:Xeddit.Views.Front.ViewModel;assembly=Xeddit"
+             xmlns:Custom="clr-namespace:Xeddit.Custom;assembly=Xeddit"
+             xmlns:Views="clr-namespace:Xeddit.Views;assembly=Xeddit"
+             mc:Ignorable="d"
+             x:DataType="{x:Type ViewModel:ISubredditViewModel}"
+             x:Class="Xeddit.Views.Front.SubredditBackView">
+
+    <StackLayout Orientation="Vertical">
+
+        <Button HorizontalOptions="Start"
+                VerticalOptions="Start"
+                BackgroundColor="Transparent"
+                Text="Expand"
+                TextColor="White">
+            <Button.Triggers>
+                <EventTrigger Event="Clicked">
+                    <Custom:ShowBackDropTriggerAction/>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+
+        <Entry Text="{Binding SubredditSearchString}"
+               Placeholder="Search"
+               Keyboard="Plain"
+               PlaceholderColor="White"
+               VerticalOptions="StartAndExpand"
+               BackgroundColor="Transparent"
+               TextColor="White"
+               ClearButtonVisibility="WhileEditing"
+               ReturnCommand="{Binding NewSubredditCommand}"
+               ReturnType="Search" />
+    </StackLayout>
+</ContentView>

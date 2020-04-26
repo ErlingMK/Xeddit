@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using Xeddit.DataModels;
 using Xeddit.DataModels.Things;
+using Xeddit.DataModels.Things.Contracts;
 using Xeddit.DataModels.Wrappers;
 
 namespace Xeddit.Mappers
@@ -20,6 +22,10 @@ namespace Xeddit.Mappers
                         break;
                     case ThingTypes.Comment:
                         thingWrapper.Data = jObject.ToObject<Comment>();
+                        if (thingWrapper.Data is IComment comment && comment.Replies is JObject repliesAsJObject && repliesAsJObject.ContainsKey("kind"))
+                        {
+                            comment.Replies = repliesAsJObject.ToObject<ListingWrapper>();
+                        }
                         break;
                     case ThingTypes.Link:
                         thingWrapper.Data = jObject.ToObject<Link>();

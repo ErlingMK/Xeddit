@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Xeddit.DataModels.Things;
@@ -24,11 +25,20 @@ namespace Xeddit.Clients
 
         public async Task<(ILink, IList<IComment>)> GetComments(ILink link)
         {
-            var comments = await m_httpClient.GetAsync($"/{link.PrefixedSubreddit}/comments/{link.Id}");
-            var listingWrapper = JsonConvert.DeserializeObject<List<ListingWrapper>>(comments);
+            var json = await m_httpClient.GetAsync($"/{link.PrefixedSubreddit}/comments/{link.Id}");
+            var listings = JsonConvert.DeserializeObject<List<ListingWrapper>>(json);
+            
+            foreach (var t in listings)
+            {
+                var listingWrapper = t;
+                m_thingMapper.Mapper(ref listingWrapper);
+            }
+
+            var thingWrappers = listings.First().Data.Children;
+            var updatedLink = thingWrappers.First().Data;
 
 
-            return (new Link(), new List<IComment>());
+            return (updatedLink as ILink, new List<IComment>());
         }
     }
 

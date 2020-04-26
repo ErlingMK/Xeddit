@@ -44,11 +44,11 @@ namespace Xeddit.DataModels.Things
         public string Thumbnail { get; set; }
         public string Title { get; set; }
         public string Url { get; set; }
-        public int Ups { get; set; }
-        public int Downs { get; set; }
+        public int? Ups { get; set; }
+        public int? Downs { get; set; }
         public bool? Likes { get; set; }
-        public long Created { get; set; }
-        public long CreatedUtc { get; set; }
+        public long? Created { get; set; }
+        public long? CreatedUtc { get; set; }
         public string Permalink { get; set; }
 
         public bool IsExpanded
