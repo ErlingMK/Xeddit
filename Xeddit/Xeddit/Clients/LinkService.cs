@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Xeddit.Clients.Abstractions;
 using Xeddit.DataModels;
 using Xeddit.DataModels.Things;
 using Xeddit.DataModels.Wrappers;
+using Xeddit.DataViewModels;
 using Xeddit.Mappers;
 using Xeddit.Services.Http;
 
@@ -16,7 +18,7 @@ namespace Xeddit.Clients
         private readonly IThingMapper m_thingMapper;
         private readonly IHttpClient m_client;
         private string m_after;
-        private int m_count;
+        private int? m_count;
 
         public LinkService(IHttpFactory httpFactory, IThingMapper thingMapper)
         {
@@ -24,7 +26,7 @@ namespace Xeddit.Clients
             m_client = httpFactory.Create();
         }
 
-        public async Task<Listing> GetLinkListingAsync(string subreddit, bool reset = false)
+        public async Task<IList<ILinkViewModel>> GetLinkListingAsync(string subreddit, bool reset = false)
         {
             if (reset)
             {
@@ -34,23 +36,24 @@ namespace Xeddit.Clients
 
             var json = await m_client.GetAsync(CreatePath(subreddit));
             var listingWrapper = JsonConvert.DeserializeObject<ListingWrapper>(json);
-            m_thingMapper.Mapper(ref listingWrapper);
 
-            m_after = listingWrapper.Data.After;
-            m_count += listingWrapper.Data.Children.Count;
+            var linkViewModels = m_thingMapper.LinkMapper(listingWrapper?.Data?.Children);
 
-            return listingWrapper.Data;
+            m_after = listingWrapper?.Data?.After;
+            m_count += listingWrapper?.Data?.Children?.Count;
+
+            return linkViewModels;
         }
 
         private string CreatePath(string path)
         {
-            if (string.IsNullOrEmpty(m_after) && m_count == 0)
+            if (string.IsNullOrEmpty(m_after) && (!m_count.HasValue || m_count.Value == 0))
             {
                 return $"/r/{path}/.json?limit=25";
             }
             else
             {
-                return $"/r/{path}/.json?after={m_after}&count={m_count}&limit=25";
+                return $"/r/{path}/.json?after={m_after}&count={m_count.GetValueOrDefault()}&limit=25";
             }
         }
     }

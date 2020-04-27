@@ -7,9 +7,11 @@
              xmlns:ViewModel="clr-namespace:Xeddit.Views.Front.ViewModel;assembly=Xeddit"
              xmlns:Custom="clr-namespace:Xeddit.Custom;assembly=Xeddit"
              xmlns:Views="clr-namespace:Xeddit.Views;assembly=Xeddit"
+             xmlns:Subreddit="clr-namespace:Xeddit.Views.Subreddit;assembly=Xeddit"
+             xmlns:Subreddit1="clr-namespace:Xeddit.Views.Subreddit.ViewModel;assembly=Xeddit"
              mc:Ignorable="d"
-             x:DataType="{x:Type ViewModel:ISubredditViewModel}"
-             x:Class="Xeddit.Views.Front.SubredditBackView">
+             x:DataType="{x:Type Subreddit1:ISubredditViewModel}"
+             x:Class="Xeddit.Views.Subreddit.SubredditBackView">
 
     <StackLayout Orientation="Vertical">
 

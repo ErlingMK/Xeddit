@@ -5,7 +5,8 @@ using Xeddit.Services;
 using Xeddit.Views;
 using Xeddit.Views.Comments;
 using Xeddit.Views.Front;
-using Xeddit.Views.Front.ViewModel;
+using Xeddit.Views.Subreddit;
+using Xeddit.Views.Subreddit.ViewModel;
 
 namespace Xeddit
 {
@@ -21,7 +22,7 @@ namespace Xeddit
             m_container.RegisterInstance(typeof(IServiceContainer), m_container);
             m_container.RegisterFrom<CompositionRoot>();
 
-            MainPage = m_container.GetInstance<SubredditPage>();
+            MainPage = m_container.GetInstance<FrontPage>();
         }
 
         protected override async void OnStart()

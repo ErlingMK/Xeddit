@@ -30,8 +30,6 @@ namespace Xeddit.Views
             typeof(int),
             typeof(BackDrop));
 
-        private bool m_backDropVisible;
-
         public BackDrop()
         {
             InitializeComponent();
@@ -67,8 +65,16 @@ namespace Xeddit.Views
         private async void ShowBackLayer()
         {
             await Task.WhenAll(
-                FrontLayer.TranslateTo(0, BackLayer.Height <= FrontLayerOffset ? FrontLayerOffset : BackLayer.Height - BackLayer.Padding.Bottom, 150, Easing.CubicInOut),
-                Scrim.TranslateTo(0, BackLayer.Height <= FrontLayerOffset ? FrontLayerOffset : BackLayer.Height - BackLayer.Padding.Bottom, 150, Easing.CubicInOut),
+                FrontLayer.TranslateTo(
+                    0,
+                    BackLayer.Height <= FrontLayerOffset ? FrontLayerOffset : BackLayer.Height - BackLayer.Padding.Bottom,
+                    150,
+                    Easing.CubicInOut),
+                Scrim.TranslateTo(
+                    0,
+                    BackLayer.Height <= FrontLayerOffset ? FrontLayerOffset : BackLayer.Height - BackLayer.Padding.Bottom,
+                    150,
+                    Easing.CubicInOut),
                 Scrim.FadeTo(.5, 150, Easing.CubicInOut));
             Scrim.InputTransparent = false;
         }

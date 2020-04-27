@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using DIPS.Xamarin.UI.Commands;
 using DIPS.Xamarin.UI.Extensions;
-using Xamarin.Forms;
 using Xeddit.Clients;
+using Xeddit.Clients.Abstractions;
 using Xeddit.DataModels;
 using Xeddit.DataModels.Things;
 using Xeddit.DataModels.Things.Contracts;
+using Xeddit.DataViewModels;
 using Xeddit.Services.Authentication.Abstractions;
 
-namespace Xeddit.Views.Front.ViewModel
+namespace Xeddit.Views.Subreddit.ViewModel
 {
     public class SubredditViewModel : ISubredditViewModel
     {
-        private string m_currentSubreddit;
         private readonly ILinkService m_linkService;
         private readonly ITokenRequest m_tokenRequest;
         private readonly ITokensContainer m_tokesContainer;
-        private RangeObservableCollection<ILink> m_links = new RangeObservableCollection<ILink>();
+        private string m_currentSubreddit;
         private bool m_isBusy;
         private bool m_isLoading;
+        private RangeObservableCollection<ILinkViewModel> m_links = new RangeObservableCollection<ILinkViewModel>();
         private string m_subredditSearchString;
 
         public SubredditViewModel(ITokenRequest tokenRequest, ITokensContainer tokesContainer, ILinkService linkService)
@@ -34,44 +34,11 @@ namespace Xeddit.Views.Front.ViewModel
 
             CurrentSubreddit = "askreddit";
 
-            NextLinksCommand = new AsyncCommand(NextLinks, () => !m_isLoading);
+            NextLinksCommand = new AsyncCommand(async () => await GetLinks(), () => !m_isLoading);
             NewSubredditCommand = new AsyncCommand(NewSubreddit);
-            GoToCommentsCommand = new Command<ILink>(GoToComments);
         }
 
-        private void GoToComments(ILink link)
-        {
-
-        }
-
-        private async Task NewSubreddit()
-        {
-            CurrentSubreddit = SubredditSearchString;
-            IsBusy = true;
-
-            await GetDefaultLinks(true);
-        }
-
-        private async Task NextLinks()
-        {
-            m_isLoading = true;
-            try
-            {
-                var listing = await m_linkService.GetLinkListingAsync(m_currentSubreddit);
-                foreach (var listingChild in listing.Children)
-                {
-                    Links.Add(listingChild.Data as Link);
-                }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-            }
-
-            m_isLoading = false;
-        }
-
-        public RangeObservableCollection<ILink> Links
+        public RangeObservableCollection<ILinkViewModel> Links
         {
             get => m_links;
             set => PropertyChanged.RaiseWhenSet(ref m_links, value, this);
@@ -83,7 +50,7 @@ namespace Xeddit.Views.Front.ViewModel
 
             await GetToken();
 
-            await GetDefaultLinks();
+            await GetLinks();
         }
 
         public bool IsBusy
@@ -108,14 +75,24 @@ namespace Xeddit.Views.Front.ViewModel
             set => PropertyChanged.RaiseWhenSet(ref m_currentSubreddit, value);
         }
 
-        public ICommand GoToCommentsCommand { get; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        private async Task GetDefaultLinks(bool reset = false)
+        private async Task NewSubreddit()
         {
+            CurrentSubreddit = SubredditSearchString;
+            IsBusy = true;
+
+            await GetLinks(true);
+        }
+
+        private async Task GetLinks(bool reset = false)
+        {
+            m_isLoading = true;
+
             try
             {
-                var listing = await m_linkService.GetLinkListingAsync(CurrentSubreddit, reset);
-                OnListingsLoaded(listing);
+                var links = await m_linkService.GetLinkListingAsync(CurrentSubreddit, reset);
+                Links.AddRange(links);   
             }
             catch (Exception exception)
             {
@@ -124,19 +101,8 @@ namespace Xeddit.Views.Front.ViewModel
             finally
             {
                 IsBusy = false;
+                m_isLoading = false;
             }
-        }
-
-        private void OnListingsLoaded(Listing listing)
-        {
-            var tempList = new List<ILink>();
-
-            foreach (var thing in listing.Children)
-            {
-                tempList.Add(thing.Data as Link);
-            }
-
-            Links = new RangeObservableCollection<ILink>(tempList);
         }
 
         private async Task GetToken()
@@ -144,7 +110,5 @@ namespace Xeddit.Views.Front.ViewModel
             m_tokenRequest.ApplicationOnly = true;
             m_tokesContainer.Tokens = await m_tokenRequest.GetJwt();
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

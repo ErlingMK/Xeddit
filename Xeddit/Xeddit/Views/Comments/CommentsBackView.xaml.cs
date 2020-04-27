@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Xeddit.Views.Front
+namespace Xeddit.Views.Comments
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SubredditBackView : ContentView
+    public partial class CommentsBackView : ContentView
     {
-        public SubredditBackView()
+        public CommentsBackView()
         {
             InitializeComponent();
         }

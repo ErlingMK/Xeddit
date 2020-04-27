@@ -5,13 +5,15 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:AndroidSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-             xmlns:ViewModel="clr-namespace:Xeddit.Views.Front.ViewModel;assembly=Xeddit"
-             x:DataType="{x:Type ViewModel:ISubredditViewModel}"
+             xmlns:ViewModel="clr-namespace:Xeddit.Views.Subreddit;assembly=Xeddit"
+             xmlns:ViewModel1="clr-namespace:Xeddit.Views.Subreddit.ViewModel;assembly=Xeddit"
+             x:DataType="{x:Type ViewModel1:ISubredditViewModel}"
              mc:Ignorable="d"
              x:Name="codeBehind"
              x:Class="Xeddit.Views.BackDrop">
     <Grid>
         <Frame x:Name="BackLayer"
+               x:FieldModifier="internal"
                Padding="0,0,0,10"
                BackgroundColor="#5C1349"
                VerticalOptions="Start"
@@ -19,6 +21,7 @@
                Content="{Binding Source={x:Reference codeBehind}, Path=BackLayerContent}" />
 
         <Frame x:Name="FrontLayer"
+               x:FieldModifier="internal"
                BackgroundColor="White"
                TranslationY="{Binding Source={x:Reference codeBehind}, Path=FrontLayerOffset}"
                Padding="0"

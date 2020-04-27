@@ -6,7 +6,8 @@ using LightInject;
 using Xamarin.Forms;
 using Xeddit.Views.Comments;
 using Xeddit.Views.Front;
-using Xeddit.Views.Front.ViewModel;
+using Xeddit.Views.Subreddit;
+using Xeddit.Views.Subreddit.ViewModel;
 
 namespace Xeddit.Services
 {
@@ -37,8 +38,7 @@ namespace Xeddit.Services
 
         public void RegisterPages()
         {
-            m_pages[typeof(ISubredditViewModel)] = typeof(SubredditPage);
-            m_pages[typeof(ICommentsViewModel)] = typeof(CommentsPage);
+            m_pages[typeof(ISubredditViewModel)] = typeof(FrontPage);
         }
     }
 

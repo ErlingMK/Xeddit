@@ -1,6 +1,7 @@
 ﻿using LightInject;
 using Xamarin.Forms;
 using Xeddit.Clients;
+using Xeddit.Clients.Abstractions;
 using Xeddit.DataModels.Things;
 using Xeddit.DataModels.Things.Contracts;
 using Xeddit.Mappers;
@@ -13,6 +14,8 @@ using Xeddit.Views;
 using Xeddit.Views.Comments;
 using Xeddit.Views.Front;
 using Xeddit.Views.Front.ViewModel;
+using Xeddit.Views.Subreddit;
+using Xeddit.Views.Subreddit.ViewModel;
 
 namespace Xeddit
 {
@@ -31,14 +34,13 @@ namespace Xeddit
         {
             serviceRegistry.Register<ISubredditViewModel, SubredditViewModel>(new PerContainerLifetime());
             serviceRegistry.Register<ICommentsViewModel, CommentsViewModel>(new PerContainerLifetime());
-            serviceRegistry.Register<IContextViewModel, ContextViewModel>(new PerContainerLifetime());
+            serviceRegistry.Register<IFrontViewModel, FrontViewModel>(new PerContainerLifetime());
         }
 
         private void RegisterViews(IServiceRegistry serviceRegistry)
         {
-            serviceRegistry.Register<SubredditPage>();
-            serviceRegistry.Register<CommentsPage>();
-            serviceRegistry.Register(fac => new NavigationPage(fac.GetInstance<SubredditPage>()), new PerContainerLifetime());
+            serviceRegistry.Register<FrontPage>();
+            serviceRegistry.Register(fac => new NavigationPage(fac.GetInstance<FrontPage>()), new PerContainerLifetime());
         }
 
         private void RegisterServices(IServiceRegistry serviceRegistry)

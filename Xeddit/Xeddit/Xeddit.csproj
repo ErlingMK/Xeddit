@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\Front\SubredditPage.xaml.cs">
-      <DependentUpon>SubredditPage.xaml</DependentUpon>
+    <Compile Update="Views\Front\FrontPage.xaml.cs">
+      <DependentUpon>FrontPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -38,16 +38,19 @@
     <EmbeddedResource Update="Views\BackDrop.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Comments\CommentsPage.xaml">
+    <EmbeddedResource Update="Views\Comments\CommentsBackView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Front\SubredditBackView.xaml">
+    <EmbeddedResource Update="Views\Comments\CommentsFrontView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Front\SubredditFrontView.xaml">
+    <EmbeddedResource Update="Views\Subreddit\SubredditBackView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Front\SubredditPage.xaml">
+    <EmbeddedResource Update="Views\Subreddit\SubredditFrontView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Front\FrontPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

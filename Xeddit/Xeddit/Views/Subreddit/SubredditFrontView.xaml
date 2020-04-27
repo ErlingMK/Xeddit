@@ -9,14 +9,17 @@
              xmlns:ViewModel="clr-namespace:Xeddit.Views.Front.ViewModel;assembly=Xeddit"
              xmlns:Contracts="clr-namespace:Xeddit.DataModels.Things.Contracts;assembly=Xeddit"
              xmlns:AndroidSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:Subreddit="clr-namespace:Xeddit.Views.Subreddit;assembly=Xeddit"
+             xmlns:Subreddit1="clr-namespace:Xeddit.Views.Subreddit.ViewModel;assembly=Xeddit"
+             xmlns:DataViewModels="clr-namespace:Xeddit.DataViewModels;assembly=Xeddit"
              mc:Ignorable="d"
-             x:DataType="{x:Type ViewModel:ISubredditViewModel}"
+             x:DataType="{x:Type Subreddit1:ISubredditViewModel}"
              x:Name="frontView"
-             x:Class="Xeddit.Views.Front.SubredditFrontView">
+             x:Class="Xeddit.Views.Subreddit.SubredditFrontView">
     <ContentView.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="LinkTemplate"
-                          x:DataType="{x:Type Contracts:ILink}">
+                          x:DataType="{x:Type DataViewModels:ILinkViewModel}">
                 <ViewCell>
                     <Frame Padding="10,10,5,10"
                            Margin="10,5"
@@ -24,7 +27,7 @@
 
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer
-                                Command="{Binding Source={x:Reference frontView}, Path=BindingContext.GoToCommentsCommand}"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModel:IFrontViewModel}}, Path=GoToCommentsCommand}"
                                 CommandParameter="{Binding }" />
                         </Frame.GestureRecognizers>
 
