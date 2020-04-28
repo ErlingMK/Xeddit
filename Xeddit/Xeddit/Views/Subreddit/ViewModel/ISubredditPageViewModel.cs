@@ -9,9 +9,10 @@ using Xeddit.DataViewModels;
 
 namespace Xeddit.Views.Subreddit.ViewModel
 {
-    public interface ISubredditViewModel : INotifyPropertyChanged
+    public interface ISubredditPageViewModel : INotifyPropertyChanged
     {
-        RangeObservableCollection<ILinkViewModel> Links { get; set; }
+        RangeObservableCollection<ILinkViewModel> Links { get; }
+        RangeObservableCollection<ISubredditViewModel> Subreddits { get; }
         Task Initialize();
         bool IsBusy { get; }
         IAsyncCommand NextLinksCommand { get; }

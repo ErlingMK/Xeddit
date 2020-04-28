@@ -7,6 +7,7 @@ namespace Xeddit.DataModels
 {
     public class ThingTypes
     {
+        public const string Subreddit = "t5";
         public const string Message = "t4";
         public const string Link = "t3";
         public const string Account = "t2";

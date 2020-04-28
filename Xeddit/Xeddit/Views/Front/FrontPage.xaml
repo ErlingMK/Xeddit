@@ -8,16 +8,37 @@
              xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:Views="clr-namespace:Xeddit.Views;assembly=Xeddit"
              xmlns:ViewModel="clr-namespace:Xeddit.Views.Front.ViewModel;assembly=Xeddit"
+             xmlns:Subreddit="clr-namespace:Xeddit.Views.Subreddit;assembly=Xeddit"
+             xmlns:Comments="clr-namespace:Xeddit.Views.Comments;assembly=Xeddit"
              mc:Ignorable="dblend"
              dblend:DataContext="{dblend:DesignInstance ViewModel:IFrontViewModel}"
              x:Class="Xeddit.Views.Front.FrontPage"
              x:DataType="{x:Type ViewModel:IFrontViewModel}"
              x:Name="contentPage">
 
-    <Views:BackDrop FrontLayerOffset="50"
-                    BindingContext="{Binding CurrentListing}"
-                    PropertyChanged="BackDropPropertyChanged">
-    </Views:BackDrop>
-    <!--BackLayerContent="{Binding Source={x:Reference contentPage}, Path=BackLayerContent}"
-                    FrontLayerContent="{Binding Source={x:Reference contentPage}, Path=FrontLayerContent}"-->
+    <Grid x:Name="BackDropContainer">
+
+        <Views:BackDrop x:Name="CommentsBackDrop"
+                        Opacity="0"
+                        FrontLayerOffset="50"
+                        BindingContext="{Binding CommentPageViewModel}">
+            <Views:BackDrop.FrontLayerContent>
+                <Comments:CommentsFrontView />
+            </Views:BackDrop.FrontLayerContent>
+            <Views:BackDrop.BackLayerContent>
+                <Subreddit:SubredditBackView />
+            </Views:BackDrop.BackLayerContent>
+        </Views:BackDrop>
+
+        <Views:BackDrop x:Name="SubredditBackDrop"
+                        FrontLayerOffset="50"
+                        BindingContext="{Binding SubredditPageViewModel}">
+            <Views:BackDrop.FrontLayerContent>
+                <Subreddit:SubredditFrontView />
+            </Views:BackDrop.FrontLayerContent>
+            <Views:BackDrop.BackLayerContent>
+                <Subreddit:SubredditBackView />
+            </Views:BackDrop.BackLayerContent>
+        </Views:BackDrop>
+    </Grid>
 </ContentPage>

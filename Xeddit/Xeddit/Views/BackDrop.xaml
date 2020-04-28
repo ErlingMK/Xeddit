@@ -7,7 +7,7 @@
              xmlns:AndroidSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:ViewModel="clr-namespace:Xeddit.Views.Subreddit;assembly=Xeddit"
              xmlns:ViewModel1="clr-namespace:Xeddit.Views.Subreddit.ViewModel;assembly=Xeddit"
-             x:DataType="{x:Type ViewModel1:ISubredditViewModel}"
+             x:DataType="{x:Type ViewModel1:ISubredditPageViewModel}"
              mc:Ignorable="d"
              x:Name="codeBehind"
              x:Class="Xeddit.Views.BackDrop">

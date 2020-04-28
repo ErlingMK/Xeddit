@@ -76,6 +76,7 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.5.2" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Custom\CustomFrame.cs" />
     <Compile Include="Custom\Renderer\CustomListViewRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -13,6 +13,7 @@ using Xamarin.Forms.Platform.Android;
 using Xeddit.Custom;
 using Xeddit.Droid.Custom.Renderer;
 using ListView = Android.Widget.ListView;
+using View = Android.Views.View;
 
 [assembly: ExportRenderer(typeof(CustomListView), typeof(CustomListViewRenderer))]
 namespace Xeddit.Droid.Custom.Renderer
@@ -44,9 +45,10 @@ namespace Xeddit.Droid.Custom.Renderer
 
         private void SharedListViewOnScrolled(object sender, ScrolledEventArgs e)
         {
-            m_list.FirstVisibleItemPosition = Control?.FirstVisiblePosition;
-            m_list.LastVisibleItemPosition = Control?.LastVisiblePosition;
-            if (Control?.LastVisiblePosition == (Control?.Adapter.Count - 1))
+            if (Control == null) return;
+            m_list.FirstVisibleItemPosition = Control.FirstVisiblePosition;
+            m_list.LastVisibleItemPosition = Control.LastVisiblePosition;
+            if (Control.LastVisiblePosition == (Control.Adapter.Count - 1))
             {
                 m_list.LoadMoreCommand?.Execute(null);
             }

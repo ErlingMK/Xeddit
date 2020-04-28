@@ -67,12 +67,12 @@ namespace Xeddit.Views
             await Task.WhenAll(
                 FrontLayer.TranslateTo(
                     0,
-                    BackLayer.Height <= FrontLayerOffset ? FrontLayerOffset : BackLayer.Height - BackLayer.Padding.Bottom,
+                    BackLayer.Height <= FrontLayerOffset ? FrontLayerOffset : BackLayer.Height - BackLayer.Padding.Bottom - 50,
                     150,
                     Easing.CubicInOut),
                 Scrim.TranslateTo(
                     0,
-                    BackLayer.Height <= FrontLayerOffset ? FrontLayerOffset : BackLayer.Height - BackLayer.Padding.Bottom,
+                    BackLayer.Height <= FrontLayerOffset ? FrontLayerOffset : BackLayer.Height - BackLayer.Padding.Bottom - 50,
                     150,
                     Easing.CubicInOut),
                 Scrim.FadeTo(.5, 150, Easing.CubicInOut));

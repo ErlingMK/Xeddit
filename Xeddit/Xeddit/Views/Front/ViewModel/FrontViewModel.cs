@@ -5,6 +5,7 @@ using DIPS.Xamarin.UI.Commands;
 using DIPS.Xamarin.UI.Extensions;
 using Xamarin.Forms;
 using Xeddit.DataModels.Things.Contracts;
+using Xeddit.DataViewModels;
 using Xeddit.Views.Comments;
 using Xeddit.Views.Subreddit.ViewModel;
 
@@ -12,21 +13,25 @@ namespace Xeddit.Views.Front.ViewModel
 {
     public class FrontViewModel : IFrontViewModel
     {
-        private readonly ICommentsViewModel m_commentsViewModel;
-        private readonly ISubredditViewModel m_subredditViewModel;
+        private readonly ICommentPageViewModel m_commentPageViewModel;
+        private readonly ISubredditPageViewModel m_subredditPageViewModel;
         private object m_currentListing;
 
-        public FrontViewModel(ISubredditViewModel subredditViewModel, ICommentsViewModel commentsViewModel)
+        public FrontViewModel(ISubredditPageViewModel subredditPageViewModel, ICommentPageViewModel commentPageViewModel)
         {
-            m_subredditViewModel = subredditViewModel;
-            m_commentsViewModel = commentsViewModel;
+            SubredditPageViewModel = subredditPageViewModel;
+            CommentPageViewModel = commentPageViewModel;
 
-            CurrentListing = subredditViewModel;
+            CurrentListing = subredditPageViewModel;
 
-            GoToCommentsCommand = new AsyncCommand<ILink>(async link => await GoToComments(link));
+            GoToCommentsCommand = new AsyncCommand<ILinkViewModel>(GoToComments);
         }
 
-        public IAsyncCommand<ILink> GoToCommentsCommand { get; }
+        public IAsyncCommand<ILinkViewModel> GoToCommentsCommand { get; }
+
+        public ISubredditPageViewModel SubredditPageViewModel { get; }
+        public ICommentPageViewModel CommentPageViewModel { get; }
+
 
         public object CurrentListing
         {
@@ -36,11 +41,11 @@ namespace Xeddit.Views.Front.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private async Task GoToComments(ILink link)
+        private async Task GoToComments(ILinkViewModel link)
         {
-            var initialize = m_commentsViewModel.Initialize(link);
-            CurrentListing = m_commentsViewModel;
-            await initialize;
+            //var initialize = m_commentPageViewModel.Initialize(link);
+            CurrentListing = CommentPageViewModel;
+            //await initialize;
         }
     }
 }

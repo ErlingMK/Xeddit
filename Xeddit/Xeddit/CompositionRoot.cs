@@ -32,8 +32,8 @@ namespace Xeddit
 
         private void RegisterViewModels(IServiceRegistry serviceRegistry)
         {
-            serviceRegistry.Register<ISubredditViewModel, SubredditViewModel>(new PerContainerLifetime());
-            serviceRegistry.Register<ICommentsViewModel, CommentsViewModel>(new PerContainerLifetime());
+            serviceRegistry.Register<ISubredditPageViewModel, SubredditPageViewModel>(new PerContainerLifetime());
+            serviceRegistry.Register<ICommentPageViewModel, CommentPageViewModel>(new PerContainerLifetime());
             serviceRegistry.Register<IFrontViewModel, FrontViewModel>(new PerContainerLifetime());
         }
 
@@ -52,6 +52,7 @@ namespace Xeddit
             serviceRegistry.Register<IAuthorizationRequest, AuthorizationRequest>(new PerContainerLifetime());
             serviceRegistry.Register<ITokenRequest, TokenRequest>(new PerContainerLifetime());
             serviceRegistry.Register<ILinkService, LinkService>();
+            serviceRegistry.Register<ISubredditService, SubredditService>();
             serviceRegistry.Register<ICommentsService, CommentsService>();
             serviceRegistry.Register<ITokensContainer, TokensContainer>(new PerContainerLifetime());
             serviceRegistry.Register<IThingMapper, ThingMapper>();

@@ -73,5 +73,27 @@ namespace Xeddit.Mappers
 
             return linkViewModels;
         }
+
+        public IList<ISubredditViewModel> SubredditMapper(IList<ThingWrapper> subreddits)
+        {
+            var subredditViewModels = new List<ISubredditViewModel>();
+            foreach (var thingWrapper in subreddits)
+                if (thingWrapper.Data is JObject jObject && thingWrapper.Kind == ThingTypes.Subreddit)
+                {
+                    thingWrapper.Data = jObject.ToObject<Subreddit>();
+                    if (thingWrapper.Data is Subreddit subreddit)
+                        subredditViewModels.Add(
+                            new SubredditViewModel(
+                                subreddit.AccountsActive,
+                                subreddit.Description,
+                                subreddit.DisplayName,
+                                subreddit.Subscribers,
+                                subreddit.Title,
+                                subreddit.Url,
+                                subreddit.DisplayNamePrefixed));
+                }
+
+            return subredditViewModels;
+        }
     }
 }

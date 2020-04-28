@@ -7,13 +7,13 @@
              xmlns:Custom="clr-namespace:Xeddit.Custom;assembly=Xeddit"
              xmlns:ValueConverters="http://dips.xamarin.ui.com"
              xmlns:ViewModel="clr-namespace:Xeddit.Views.Front.ViewModel;assembly=Xeddit"
-             xmlns:Contracts="clr-namespace:Xeddit.DataModels.Things.Contracts;assembly=Xeddit"
              xmlns:AndroidSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-             xmlns:Subreddit="clr-namespace:Xeddit.Views.Subreddit;assembly=Xeddit"
-             xmlns:Subreddit1="clr-namespace:Xeddit.Views.Subreddit.ViewModel;assembly=Xeddit"
+             xmlns:Subreddit="clr-namespace:Xeddit.Views.Subreddit.ViewModel;assembly=Xeddit"
              xmlns:DataViewModels="clr-namespace:Xeddit.DataViewModels;assembly=Xeddit"
+             xmlns:Front="clr-namespace:Xeddit.Views.Front;assembly=Xeddit"
+             xmlns:Views="clr-namespace:Xeddit.Views;assembly=Xeddit"
              mc:Ignorable="d"
-             x:DataType="{x:Type Subreddit1:ISubredditViewModel}"
+             x:DataType="{x:Type Subreddit:ISubredditPageViewModel}"
              x:Name="frontView"
              x:Class="Xeddit.Views.Subreddit.SubredditFrontView">
     <ContentView.Resources>
@@ -21,15 +21,16 @@
             <DataTemplate x:Key="LinkTemplate"
                           x:DataType="{x:Type DataViewModels:ILinkViewModel}">
                 <ViewCell>
-                    <Frame Padding="10,10,5,10"
-                           Margin="10,5"
-                           CornerRadius="10">
+                    <Custom:TappableFrame Padding="10,10,5,10"
+                                          Margin="10,5"
+                                          CornerRadius="10"
+                                          Tapped="FrameTapped">
 
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModel:IFrontViewModel}}, Path=GoToCommentsCommand}"
-                                CommandParameter="{Binding }" />
-                        </Frame.GestureRecognizers>
+                        <!--<Frame.GestureRecognizers>
+                            --><!--<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type Front:FrontPage}}, Path=BindingContext.GoToCommentsCommand}"
+                                CommandParameter="{Binding }"/>--><!--
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+                        </Frame.GestureRecognizers>-->
 
                         <Grid>
                             <Grid.RowDefinitions>
@@ -73,18 +74,18 @@
                                    Text="{Binding Author}"
                                    FontAttributes="Italic" />
                         </Grid>
-                    </Frame>
+                    </Custom:TappableFrame>
                 </ViewCell>
             </DataTemplate>
         </ResourceDictionary>
     </ContentView.Resources>
 
     <Grid>
-        <StackLayout>
+        <AbsoluteLayout x:Name="absoluteLayout">
             <Label Text="{Binding CurrentSubreddit}"
                    Margin="10" />
 
-            <Custom:CustomListView ItemsSource="{Binding Links}"
+            <Custom:CustomListView x:Name="customListView" ItemsSource="{Binding Links}"
                                    ItemTemplate="{StaticResource LinkTemplate}"
                                    HasUnevenRows="True"
                                    SeparatorVisibility="None"
@@ -96,7 +97,7 @@
                              HeightRequest="50" />
                 </ListView.Footer>
             </Custom:CustomListView>
-        </StackLayout>
+        </AbsoluteLayout>
 
         <Frame x:Name="ActivityIndicator"
                IsVisible="{Binding IsBusy}"

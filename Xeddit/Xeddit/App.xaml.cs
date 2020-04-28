@@ -28,7 +28,7 @@ namespace Xeddit
         protected override async void OnStart()
         {
             m_container.GetInstance<INavigationService>().RegisterPages();
-            await m_container.GetInstance<ISubredditViewModel>().Initialize();
+            await m_container.GetInstance<ISubredditPageViewModel>().Initialize();
         }
 
         protected override void OnSleep()

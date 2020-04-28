@@ -15,9 +15,10 @@ using Xeddit.Services.Authentication.Abstractions;
 
 namespace Xeddit.Views.Subreddit.ViewModel
 {
-    public class SubredditViewModel : ISubredditViewModel
+    public class SubredditPageViewModel : ISubredditPageViewModel
     {
         private readonly ILinkService m_linkService;
+        private readonly ISubredditService m_subredditService;
         private readonly ITokenRequest m_tokenRequest;
         private readonly ITokensContainer m_tokesContainer;
         private string m_currentSubreddit;
@@ -25,12 +26,14 @@ namespace Xeddit.Views.Subreddit.ViewModel
         private bool m_isLoading;
         private RangeObservableCollection<ILinkViewModel> m_links = new RangeObservableCollection<ILinkViewModel>();
         private string m_subredditSearchString;
+        private RangeObservableCollection<ISubredditViewModel> m_subreddits = new RangeObservableCollection<ISubredditViewModel>();
 
-        public SubredditViewModel(ITokenRequest tokenRequest, ITokensContainer tokesContainer, ILinkService linkService)
+        public SubredditPageViewModel(ITokenRequest tokenRequest, ITokensContainer tokesContainer, ILinkService linkService, ISubredditService subredditService)
         {
             m_tokenRequest = tokenRequest;
             m_tokesContainer = tokesContainer;
             m_linkService = linkService;
+            m_subredditService = subredditService;
 
             CurrentSubreddit = "askreddit";
 
@@ -44,6 +47,12 @@ namespace Xeddit.Views.Subreddit.ViewModel
             set => PropertyChanged.RaiseWhenSet(ref m_links, value, this);
         }
 
+        public RangeObservableCollection<ISubredditViewModel> Subreddits
+        {
+            get => m_subreddits;
+            set => PropertyChanged.RaiseWhenSet(ref m_subreddits, value);
+        }
+
         public async Task Initialize()
         {
             IsBusy = true;
@@ -51,6 +60,21 @@ namespace Xeddit.Views.Subreddit.ViewModel
             await GetToken();
 
             await GetLinks();
+
+            await GetSubreddits();
+        }
+
+        private async Task GetSubreddits()
+        {
+            try
+            {
+                var popularSubreddits = await m_subredditService.GetPopularSubreddits();
+                Subreddits.AddRange(popularSubreddits);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
 
         public bool IsBusy

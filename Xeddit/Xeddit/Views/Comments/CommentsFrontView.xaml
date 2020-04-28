@@ -6,10 +6,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:Comments="clr-namespace:Xeddit.Views.Comments;assembly=Xeddit"
              mc:Ignorable="d"
-             x:DataType="{x:Type Comments:ICommentsViewModel}"
+             x:DataType="{x:Type Comments:ICommentPageViewModel}"
              x:Class="Xeddit.Views.Comments.CommentsFrontView">
 
     <Grid>
-        <Label Text="{Binding CurrentLink.Title}" />
+        <BoxView HeightRequest="300" WidthRequest="300"
+                 BackgroundColor="Yellow" />
     </Grid>
 </ContentView>

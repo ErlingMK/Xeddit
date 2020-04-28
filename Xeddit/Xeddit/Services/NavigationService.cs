@@ -38,7 +38,7 @@ namespace Xeddit.Services
 
         public void RegisterPages()
         {
-            m_pages[typeof(ISubredditViewModel)] = typeof(FrontPage);
+            m_pages[typeof(ISubredditPageViewModel)] = typeof(FrontPage);
         }
     }
 

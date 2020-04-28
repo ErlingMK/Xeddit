@@ -4,16 +4,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:ViewModel="clr-namespace:Xeddit.Views.Front.ViewModel;assembly=Xeddit"
              xmlns:Custom="clr-namespace:Xeddit.Custom;assembly=Xeddit"
-             xmlns:Views="clr-namespace:Xeddit.Views;assembly=Xeddit"
-             xmlns:Subreddit="clr-namespace:Xeddit.Views.Subreddit;assembly=Xeddit"
+             xmlns:DataViewModels="clr-namespace:Xeddit.DataViewModels;assembly=Xeddit"
              xmlns:Subreddit1="clr-namespace:Xeddit.Views.Subreddit.ViewModel;assembly=Xeddit"
              mc:Ignorable="d"
-             x:DataType="{x:Type Subreddit1:ISubredditViewModel}"
+             x:DataType="{x:Type Subreddit1:ISubredditPageViewModel}"
              x:Class="Xeddit.Views.Subreddit.SubredditBackView">
 
-    <StackLayout Orientation="Vertical">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
         <Button HorizontalOptions="Start"
                 VerticalOptions="Start"
@@ -22,12 +24,28 @@
                 TextColor="White">
             <Button.Triggers>
                 <EventTrigger Event="Clicked">
-                    <Custom:ShowBackDropTriggerAction/>
+                    <Custom:ShowBackDropTriggerAction />
                 </EventTrigger>
             </Button.Triggers>
         </Button>
 
-        <Entry Text="{Binding SubredditSearchString}"
+
+        <Custom:CustomListView Grid.Row="1"
+                               ItemsSource="{Binding Subreddits}"
+                               HasUnevenRows="True">
+            <Custom:CustomListView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type DataViewModels:ISubredditViewModel}">
+                    <ViewCell>
+                        <Label Text="{Binding DisplayNamePrefixed}"
+                               Padding="10"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                    </ViewCell>
+                </DataTemplate>
+            </Custom:CustomListView.ItemTemplate>
+        </Custom:CustomListView>
+
+        <!--<Entry Text="{Binding SubredditSearchString}"
                Placeholder="Search"
                Keyboard="Plain"
                PlaceholderColor="White"
@@ -36,6 +54,6 @@
                TextColor="White"
                ClearButtonVisibility="WhileEditing"
                ReturnCommand="{Binding NewSubredditCommand}"
-               ReturnType="Search" />
-    </StackLayout>
+               ReturnType="Search" />-->
+    </Grid>
 </ContentView>
