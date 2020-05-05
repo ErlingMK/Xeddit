@@ -38,7 +38,7 @@ namespace Xeddit.Views.Subreddit.ViewModel
             CurrentSubreddit = "askreddit";
 
             NextLinksCommand = new AsyncCommand(async () => await GetLinks(), () => !m_isLoading);
-            NewSubredditCommand = new AsyncCommand(NewSubreddit);
+            NewSubredditCommand = new AsyncCommand<ISubredditViewModel>(NewSubreddit);
         }
 
         public RangeObservableCollection<ILinkViewModel> Links
@@ -91,7 +91,7 @@ namespace Xeddit.Views.Subreddit.ViewModel
             set => PropertyChanged.RaiseWhenSet(ref m_subredditSearchString, value);
         }
 
-        public IAsyncCommand NewSubredditCommand { get; }
+        public IAsyncCommand<ISubredditViewModel> NewSubredditCommand { get; }
 
         public string CurrentSubreddit
         {
@@ -101,9 +101,9 @@ namespace Xeddit.Views.Subreddit.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private async Task NewSubreddit()
+        private async Task NewSubreddit(ISubredditViewModel subredditViewModel)
         {
-            CurrentSubreddit = SubredditSearchString;
+            CurrentSubreddit = subredditViewModel.DisplayName;
             IsBusy = true;
 
             await GetLinks(true);
@@ -112,11 +112,12 @@ namespace Xeddit.Views.Subreddit.ViewModel
         private async Task GetLinks(bool reset = false)
         {
             m_isLoading = true;
-
+            if (reset) Links.Clear();
             try
             {
                 var links = await m_linkService.GetLinkListingAsync(CurrentSubreddit, reset);
-                Links.AddRange(links);   
+                Links.AddRange(links);
+                IsBusy = false;
             }
             catch (Exception exception)
             {
@@ -124,7 +125,6 @@ namespace Xeddit.Views.Subreddit.ViewModel
             }
             finally
             {
-                IsBusy = false;
                 m_isLoading = false;
             }
         }

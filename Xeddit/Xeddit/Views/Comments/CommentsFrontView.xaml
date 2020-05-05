@@ -5,12 +5,31 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:Comments="clr-namespace:Xeddit.Views.Comments;assembly=Xeddit"
+             xmlns:DataViewModels="clr-namespace:Xeddit.DataViewModels;assembly=Xeddit"
              mc:Ignorable="d"
              x:DataType="{x:Type Comments:ICommentPageViewModel}"
+             x:Name="contentView"
              x:Class="Xeddit.Views.Comments.CommentsFrontView">
 
     <Grid>
-        <BoxView HeightRequest="300" WidthRequest="300"
-                 BackgroundColor="Yellow" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <ContentView Grid.Row="0"
+                     Content="{Binding Source={x:Reference contentView}, Path=LinkTitleFrame}"
+                     HeightRequest="{Binding Source={x:Reference contentView}, Path=LinkTitleFrame.Height}"/>
+
+        <ListView Grid.Row="1"
+                  ItemsSource="{Binding Comments}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type DataViewModels:ICommentViewModel}">
+                    <ViewCell>
+                        <Label Text="{Binding Body}" />
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </ContentView>

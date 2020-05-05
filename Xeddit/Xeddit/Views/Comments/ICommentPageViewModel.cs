@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Xeddit.DataModels.Things.Contracts;
 using Xeddit.DataViewModels;
 
@@ -8,5 +9,6 @@ namespace Xeddit.Views.Comments
     {
         ILinkViewModel CurrentLink { get; }
         Task Initialize(ILinkViewModel link);
+        RangeObservableCollection<ICommentViewModel> Comments { get; }
     }
 }

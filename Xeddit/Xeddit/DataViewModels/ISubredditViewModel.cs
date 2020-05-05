@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using DIPS.Xamarin.UI.Commands;
 
 namespace Xeddit.DataViewModels
 {

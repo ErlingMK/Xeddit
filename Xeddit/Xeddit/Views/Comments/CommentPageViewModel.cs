@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Xeddit.Clients;
 using Xeddit.Clients.Abstractions;
 using Xeddit.DataModels.Things.Contracts;
@@ -22,11 +23,15 @@ namespace Xeddit.Views.Comments
             await LoadComments();
         }
 
+        public RangeObservableCollection<ICommentViewModel> Comments { get; } = new RangeObservableCollection<ICommentViewModel>(){new CommentViewModel(){Body = "asdasdasd"}};
+
         public ILinkViewModel CurrentLink { get; private set; }
 
-        private async Task LoadComments()
+        private Task LoadComments()
         {
-            var comments = await m_commentsService.GetComments(CurrentLink);
+            return Task.CompletedTask;
+            //var (item1, comments) = await m_commentsService.GetComments(CurrentLink);
+            //Comments.AddRange(comments);
         }
     }
 }

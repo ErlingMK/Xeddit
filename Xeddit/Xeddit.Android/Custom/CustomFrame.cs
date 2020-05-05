@@ -39,6 +39,9 @@ namespace Xeddit.Droid.Custom
 
             if (e.NewElement == null)
             {
+                GenericMotion -= OnGenericMotion;
+                Touch -= OnTouch;
+                m_tappableFrameListener.SingleTap -= OnSingleTap;
             }
 
             if (e.NewElement != null)
@@ -66,6 +69,7 @@ namespace Xeddit.Droid.Custom
             var displayMetricsDensity = m_context.Resources.DisplayMetrics.Density;
             var deviceIndepedentPoint = new Point(ints[0] / displayMetricsDensity,ints[1] / displayMetricsDensity);
             (Element as TappableFrame)?.OnTapped(deviceIndepedentPoint);
+
         }
     }
 

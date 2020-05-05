@@ -13,8 +13,6 @@ namespace Xeddit.Views.Front.ViewModel
 {
     public class FrontViewModel : IFrontViewModel
     {
-        private readonly ICommentPageViewModel m_commentPageViewModel;
-        private readonly ISubredditPageViewModel m_subredditPageViewModel;
         private object m_currentListing;
 
         public FrontViewModel(ISubredditPageViewModel subredditPageViewModel, ICommentPageViewModel commentPageViewModel)
@@ -28,7 +26,6 @@ namespace Xeddit.Views.Front.ViewModel
         }
 
         public IAsyncCommand<ILinkViewModel> GoToCommentsCommand { get; }
-
         public ISubredditPageViewModel SubredditPageViewModel { get; }
         public ICommentPageViewModel CommentPageViewModel { get; }
 
@@ -43,9 +40,9 @@ namespace Xeddit.Views.Front.ViewModel
 
         private async Task GoToComments(ILinkViewModel link)
         {
-            //var initialize = m_commentPageViewModel.Initialize(link);
+            var initialize = CommentPageViewModel.Initialize(link);
             CurrentListing = CommentPageViewModel;
-            //await initialize;
+            await initialize;
         }
     }
 }

@@ -24,24 +24,20 @@ namespace Xeddit.Views.Subreddit
         {
             if (sender is Frame frame && BindingContext is ISubredditPageViewModel viewModel)
             {
-                var frameBindingContext = frame.BindingContext as ILinkViewModel;
-                //viewModel.Links.Remove(frameBindingContext);
-
                 var resource = Resources["LinkTemplate"];
 
-                var dataTemplate = resource as DataTemplate;
+                if (!(resource is DataTemplate dataTemplate))return;
 
                 var content = dataTemplate.CreateContent();
-                var viewCell = content as ViewCell;
+                if (!(content is ViewCell viewCell)) return;
                 var viewCellView = viewCell.View;
-                viewCellView.BindingContext = frameBindingContext;
+                viewCellView.BindingContext = frame.BindingContext;
                 viewCellView.Margin = new Thickness(0);
 
-                AbsoluteLayout.SetLayoutBounds(viewCellView, new Rectangle(new Point(e.Point.X, e.Point.Y - 81), frame.Bounds.Size));
-
+                AbsoluteLayout.SetLayoutBounds(viewCellView, new Rectangle(new Point(e.Point.X, e.Point.Y - 30), frame.Bounds.Size));
+                var absoluteLayout = this.GetParentOfType<AbsoluteLayout>();
                 absoluteLayout.Children.Add(viewCellView);
-                //viewCellView.TranslationY = 200;
-                customListView.FadeTo(0);
+                //customListView.FadeTo(0);
             }
         }
     }

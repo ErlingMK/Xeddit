@@ -74,18 +74,14 @@ namespace Xeddit.Views
                     0,
                     BackLayer.Height <= FrontLayerOffset ? FrontLayerOffset : BackLayer.Height - BackLayer.Padding.Bottom - 50,
                     150,
-                    Easing.CubicInOut),
-                Scrim.FadeTo(.5, 150, Easing.CubicInOut));
-            Scrim.InputTransparent = false;
+                    Easing.CubicInOut));
         }
 
         private async void HideBackLayer()
         {
             await Task.WhenAll(
                 FrontLayer.TranslateTo(0, FrontLayerOffset, 150, Easing.CubicInOut),
-                Scrim.TranslateTo(0, FrontLayerOffset, 150, Easing.CubicInOut),
-                Scrim.FadeTo(0, 150, Easing.CubicInOut));
-            Scrim.InputTransparent = true;
+                Scrim.TranslateTo(0, FrontLayerOffset, 150, Easing.CubicInOut));
         }
 
         public static bool GetShowBackDrop(BindableObject view)

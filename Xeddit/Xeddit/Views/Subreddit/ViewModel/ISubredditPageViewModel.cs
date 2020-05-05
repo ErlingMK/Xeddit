@@ -17,7 +17,7 @@ namespace Xeddit.Views.Subreddit.ViewModel
         bool IsBusy { get; }
         IAsyncCommand NextLinksCommand { get; }
         string SubredditSearchString { get; }
-        IAsyncCommand NewSubredditCommand { get; }
+        IAsyncCommand<ISubredditViewModel> NewSubredditCommand { get; }
         string CurrentSubreddit { get; }
     }
 }
