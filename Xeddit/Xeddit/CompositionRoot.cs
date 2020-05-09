@@ -12,6 +12,7 @@ using Xeddit.Services.Http;
 using Xeddit.ViewModels;
 using Xeddit.Views;
 using Xeddit.Views.Comments;
+using Xeddit.Views.Comments.ViewModel;
 using Xeddit.Views.Front;
 using Xeddit.Views.Front.ViewModel;
 using Xeddit.Views.Subreddit;

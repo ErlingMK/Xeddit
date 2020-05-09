@@ -25,20 +25,14 @@ namespace Xeddit.Clients
             m_httpClient = httpFactory.Create();
         }
 
-        public async Task<(ILink, IList<IComment>)> GetComments(ILinkViewModel link)
+        public async Task<(ILinkViewModel, IList<ICommentViewModel>)> GetComments(ILinkViewModel link)
         {
             var json = await m_httpClient.GetAsync($"/{link.PrefixedSubreddit}/comments/{link.Id}.json");
             var listings = JsonConvert.DeserializeObject<List<ListingWrapper>>(json);
-            
-            foreach (var t in listings)
-            {
-                var listingWrapper = t;
-                m_thingMapper.Mapper(ref listingWrapper);
-            }
 
-            var updatedLink = listings.First().Data.Children.First().Data as ILink;
+            var (linkViewModel, commentViewModels) = m_thingMapper.LinkWithCommentsMapper(listings);
 
-            return (updatedLink, new List<IComment>());
+            return (linkViewModel, commentViewModels);
         }
     }
 }

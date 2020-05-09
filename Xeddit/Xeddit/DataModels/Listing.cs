@@ -10,7 +10,7 @@ namespace Xeddit.DataModels
     {
         public string ModHash { get; set; }
         public int? Dist { get; set; }
-        public IList<ThingWrapper> Children { get; set; }
+        public List<ThingWrapper> Children { get; set; }
         public string After { get; set; }
         public string Before { get; set; }
     }

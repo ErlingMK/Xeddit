@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using Xeddit.DataModels;
 using Xeddit.DataModels.Things;
@@ -23,7 +24,8 @@ namespace Xeddit.Mappers
                     case ThingTypes.Comment:
                         thingWrapper.Data = jObject.ToObject<Comment>();
                         if (thingWrapper.Data is IComment comment && comment.Replies is JObject repliesAsJObject &&
-                            repliesAsJObject.ContainsKey("kind")) comment.Replies = repliesAsJObject.ToObject<ListingWrapper>();
+                            repliesAsJObject.ContainsKey("kind"))
+                            comment.Replies = repliesAsJObject.ToObject<ListingWrapper>();
                         break;
                     case ThingTypes.Link:
                         thingWrapper.Data = jObject.ToObject<Link>();
@@ -36,7 +38,41 @@ namespace Xeddit.Mappers
             }
         }
 
-        public IList<ILinkViewModel> LinkMapper(IList<ThingWrapper> links)
+        public (ILinkViewModel, IList<ICommentViewModel>) LinkWithCommentsMapper(List<ListingWrapper> comments)
+        {
+            var link = LinkMapper(comments.First().Data.Children);
+            var commentViewModels = CommentsMapper(comments.Last().Data.Children);
+            return (link.Single(), commentViewModels);
+        }
+
+        public IList<ICommentViewModel> CommentsMapper(List<ThingWrapper> comments)
+        {
+            var commentViewModels = new List<ICommentViewModel>();
+            foreach (var thingWrapper in comments)
+                if (thingWrapper.Data is JObject jObject && thingWrapper.Kind == ThingTypes.Comment)
+                {
+                    thingWrapper.Data = jObject.ToObject<Comment>();
+
+                    if (thingWrapper.Data is IComment comment)
+                    {
+                        var replies = new List<ICommentViewModel>();
+                        if (comment.Replies is JObject repliesAsJObject && repliesAsJObject.ContainsKey("kind"))
+                        {
+                            replies = CommentsMapper(repliesAsJObject.ToObject<ListingWrapper>().Data.Children) as List<ICommentViewModel>;
+                        }
+
+                        commentViewModels.Add(
+                            new CommentViewModel(comment.Ups, comment.Downs, comment.Likes,
+                                comment.Created, comment.CreatedUtc, comment.Author, comment.Body, comment.LinkId,
+                                comment.ParentId, replies, comment.Score, comment.Subreddit,
+                                comment.SubredditId));
+                    }
+                }
+
+            return commentViewModels;
+        }
+
+        public IList<ILinkViewModel> LinkMapper(List<ThingWrapper> links)
         {
             var linkViewModels = new List<ILinkViewModel>();
             foreach (var thingWrapper in links)
@@ -74,7 +110,7 @@ namespace Xeddit.Mappers
             return linkViewModels;
         }
 
-        public IList<ISubredditViewModel> SubredditMapper(IList<ThingWrapper> subreddits)
+        public IList<ISubredditViewModel> SubredditMapper(List<ThingWrapper> subreddits)
         {
             var subredditViewModels = new List<ISubredditViewModel>();
             foreach (var thingWrapper in subreddits)
@@ -94,6 +130,10 @@ namespace Xeddit.Mappers
                 }
 
             return subredditViewModels;
+        }
+
+        private void ReplyMapper(ListingWrapper replies)
+        {
         }
     }
 }

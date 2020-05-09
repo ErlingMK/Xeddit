@@ -5,18 +5,18 @@ namespace Xeddit.DataViewModels
 {
     public interface ICommentViewModel
     {
-        int? Ups { get; set; }
-        int? Downs { get; set; }
-        bool? Likes { get; set; }
-        long? Created { get; set; }
-        long? CreatedUtc { get; set; }
-        string Author { get; set; }
-        string Body { get; set; }
-        string LinkId { get; set; }
-        string ParentId { get; set; }
-        IList<ListingWrapper> Replies { get; set; }
-        int? Score { get; set; }
-        string Subreddit { get; set; }
-        string SubredditId { get; set; }
+        int? Ups { get; }
+        int? Downs { get; }
+        bool? Likes { get; }
+        long? Created { get; }
+        long? CreatedUtc { get; }
+        string Author { get; }
+        string Body { get; }
+        string LinkId { get; }
+        string ParentId { get; }
+        List<ICommentViewModel> Replies { get; }
+        int? Score { get;  }
+        string Subreddit { get;}
+        string SubredditId { get; }
     }
 }

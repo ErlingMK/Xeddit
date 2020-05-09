@@ -56,7 +56,7 @@
                 FontFamily="{x:Static Fonts:FontIcons.Solid}"
                 Text="{x:Static Fonts:FontIcons.Bars}"
                 TextColor="White"
-                Clicked="Button_OnClicked">
+                Clicked="FloatingButtonClicked">
         </Button>
     </AbsoluteLayout>
 </ContentPage>

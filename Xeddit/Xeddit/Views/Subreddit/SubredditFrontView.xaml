@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"
       encoding="UTF-8"?>
+
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -23,11 +24,12 @@
                     <Custom:TappableFrame Padding="10,10,5,10"
                                           Margin="10,5"
                                           CornerRadius="10"
-                                          Tapped="FrameTapped"
-                                          Command="{Binding Source={RelativeSource AncestorType={x:Type Front:FrontPage}}, Path=BindingContext.GoToCommentsCommand}"
-                                          CommandParameter="{Binding}">
+                                          Tapped="FrameTapped">
 
-                        <Grid>
+                        <!--Command="{Binding Source={RelativeSource AncestorType={x:Type Front:FrontPage}}, Path=BindingContext.GoToCommentsCommand}"
+                        CommandParameter="{Binding}"-->
+
+                        <Grid x:Name="LinkGrid">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -55,13 +57,12 @@
                                    Margin="0,0,15,0"
                                    Text="{Binding Title}" />
 
-                            <ImageButton Grid.Row="0"
-                                         Grid.Column="2"
-                                         Grid.RowSpan="2"
-                                         Scale="1.5"
-                                         VerticalOptions="Start"
-                                         IsVisible="{Binding HasThumbnail}"
-                                         Source="{Binding Thumbnail}" />
+                            <Image x:Name="Image"
+                                   Grid.Row="0"
+                                   Grid.Column="2"
+                                   Grid.RowSpan="2"
+                                   Source="{Binding Thumbnail}" />
+                            <!--IsVisible="{Binding HasThumbnail}"-->
 
                             <Label Grid.Row="2"
                                    Grid.Column="0"
@@ -86,7 +87,7 @@
                FontAttributes="Bold"
                Margin="20,10" />
 
-        <Custom:CustomListView x:Name="customListView" 
+        <Custom:CustomListView x:Name="customListView"
                                Grid.Row="1"
                                ItemsSource="{Binding Links}"
                                ItemTemplate="{StaticResource LinkTemplate}"

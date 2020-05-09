@@ -7,6 +7,7 @@ using Xamarin.Forms;
 using Xeddit.DataModels.Things.Contracts;
 using Xeddit.DataViewModels;
 using Xeddit.Views.Comments;
+using Xeddit.Views.Comments.ViewModel;
 using Xeddit.Views.Subreddit.ViewModel;
 
 namespace Xeddit.Views.Front.ViewModel
@@ -40,9 +41,8 @@ namespace Xeddit.Views.Front.ViewModel
 
         private async Task GoToComments(ILinkViewModel link)
         {
-            var initialize = CommentPageViewModel.Initialize(link);
             CurrentListing = CommentPageViewModel;
-            await initialize;
+            await CommentPageViewModel.Initialize(link);
         }
     }
 }

@@ -7,6 +7,6 @@ namespace Xeddit.Clients.Abstractions
 {
     public interface ICommentsService
     {
-        Task<(ILink, IList<IComment>)> GetComments(ILinkViewModel link);
+        Task<(ILinkViewModel, IList<ICommentViewModel>)> GetComments(ILinkViewModel link);
     }
 }
