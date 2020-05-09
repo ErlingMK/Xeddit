@@ -1,0 +1,91 @@
+﻿<?xml version="1.0"
+      encoding="UTF-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Comments="clr-namespace:Xeddit.Views.Comments;assembly=Xeddit"
+             xmlns:DataViewModels="clr-namespace:Xeddit.DataViewModels;assembly=Xeddit"
+             xmlns:androidSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:viewModel="clr-namespace:Xeddit.Views.Comments.ViewModel;assembly=Xeddit"
+             mc:Ignorable="d"
+             x:DataType="{x:Type viewModel:ICommentPageViewModel}"
+             x:Name="contentView"
+             x:Class="Xeddit.Views.Comments.CommentsFrontView">
+
+    <ContentView.Resources>
+
+        <DataTemplate x:Key="RepliesTemplate"
+                      x:DataType="{x:Type DataViewModels:ICommentViewModel}">
+            <StackLayout>
+                <Label Text="{Binding Body}"
+                       Margin="10" />
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding Ups}"
+                           TextColor="Green"
+                           Padding="2"/>
+                </StackLayout>
+                <StackLayout BindableLayout.ItemsSource="{Binding Replies}"
+                             BindableLayout.ItemTemplate="{StaticResource RepliesTemplate}"
+                             Padding="15,0,0,0" />
+            </StackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CommentsTemplate"
+                      x:DataType="{x:Type DataViewModels:ICommentViewModel}">
+            <ViewCell>
+                <StackLayout>
+                    <Label Text="{Binding Body}"
+                           Padding="10"
+                           BackgroundColor="LightBlue" />
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding Ups}"
+                               TextColor="Green"
+                               Padding="2"/>
+                    </StackLayout>
+                    <StackLayout BindableLayout.ItemsSource="{Binding Replies}"
+                                 BindableLayout.ItemTemplate="{StaticResource RepliesTemplate}"
+                                 Padding="10,0,0,0" />
+                </StackLayout>
+            </ViewCell>
+        </DataTemplate>
+
+
+    </ContentView.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding Source={x:Reference contentView}, Path=LinkTitleFrame.Height}" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <ContentView Grid.Row="0"
+                     Content="{Binding Source={x:Reference contentView}, Path=LinkTitleFrame}"
+                     HeightRequest="{Binding Source={x:Reference contentView}, Path=LinkTitleFrame.Height}" />
+
+        <ListView Grid.Row="1"
+                  ItemsSource="{Binding Comments}"
+                  ItemTemplate="{StaticResource CommentsTemplate}"
+                  HasUnevenRows="True"
+                  CachingStrategy="RecycleElement" />
+
+        <Frame x:Name="ActivityIndicator"
+               Grid.Row="1"
+               IsVisible="{Binding IsBusy}"
+               androidSpecific:VisualElement.Elevation="5"
+               Padding="0"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               CornerRadius="25"
+               HeightRequest="50"
+               WidthRequest="50"
+               BackgroundColor="#5C1349">
+            <ActivityIndicator VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               IsRunning="True"
+                               IsVisible="True"
+                               Margin="5"
+                               Color="White" />
+        </Frame>
+    </Grid>
+</ContentView>

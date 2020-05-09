@@ -1,0 +1,45 @@
+﻿<?xml version="1.0"
+      encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:AndroidSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:ViewModel="clr-namespace:Xeddit.Views.Subreddit;assembly=Xeddit"
+             xmlns:ViewModel1="clr-namespace:Xeddit.Views.Subreddit.ViewModel;assembly=Xeddit"
+             x:DataType="{x:Type ViewModel1:ISubredditPageViewModel}"
+             mc:Ignorable="d"
+             x:Name="codeBehind"
+             x:Class="Xeddit.Views.BackDrop">
+    <Grid RowSpacing="0"
+          BackgroundColor="#5C1349">
+        <Frame x:Name="BackLayer"
+               x:FieldModifier="internal"
+               Padding="0,0,0,10"
+               BackgroundColor="#5C1349"
+               VerticalOptions="Start"
+               AndroidSpecific:VisualElement.Elevation="0"
+               Content="{Binding Source={x:Reference codeBehind}, Path=BackLayerContent}" />
+
+        <Frame x:Name="FrontLayer"
+               x:FieldModifier="internal"
+               BackgroundColor="White"
+               TranslationY="{Binding Source={x:Reference codeBehind}, Path=FrontLayerOffset}"
+               Padding="0"
+               CornerRadius="10"
+               AndroidSpecific:VisualElement.Elevation="1"
+               Content="{Binding Source={x:Reference codeBehind}, Path=FrontLayerContent}" />
+
+        <BoxView x:Name="Scrim"
+                 InputTransparent="True"
+                 Opacity="0"
+                 AndroidSpecific:VisualElement.Elevation="1"
+                 CornerRadius="10"
+                 BackgroundColor="DimGray"
+                 HeightRequest="{Binding Source={x:Reference FrontLayer}, Path=Height}">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="ScrimTapped" />
+            </BoxView.GestureRecognizers>
+        </BoxView>
+    </Grid>
+</ContentView>

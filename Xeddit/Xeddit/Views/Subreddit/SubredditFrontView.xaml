@@ -1,0 +1,124 @@
+﻿<?xml version="1.0"
+      encoding="UTF-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Custom="clr-namespace:Xeddit.Custom;assembly=Xeddit"
+             xmlns:ValueConverters="http://dips.xamarin.ui.com"
+             xmlns:AndroidSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:Subreddit="clr-namespace:Xeddit.Views.Subreddit.ViewModel;assembly=Xeddit"
+             xmlns:DataViewModels="clr-namespace:Xeddit.DataViewModels;assembly=Xeddit"
+             xmlns:Front="clr-namespace:Xeddit.Views.Front;assembly=Xeddit"
+             xmlns:Fonts="clr-namespace:Xeddit.Resources.Fonts;assembly=Xeddit"
+             mc:Ignorable="d"
+             x:DataType="{x:Type Subreddit:ISubredditPageViewModel}"
+             x:Name="frontView"
+             x:Class="Xeddit.Views.Subreddit.SubredditFrontView">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="LinkTemplate"
+                          x:DataType="{x:Type DataViewModels:ILinkViewModel}">
+                <ViewCell>
+                    <Custom:TappableFrame Padding="10,10,5,10"
+                                          Margin="10,5"
+                                          CornerRadius="10"
+                                          Tapped="FrameTapped">
+
+                        <!--Command="{Binding Source={RelativeSource AncestorType={x:Type Front:FrontPage}}, Path=BindingContext.GoToCommentsCommand}"
+                        CommandParameter="{Binding}"-->
+
+                        <Grid x:Name="LinkGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="{Binding Score}"
+                                   TextColor="Green" />
+
+                            <Label Grid.Row="0"
+                                   Grid.Column="1"
+                                   Text="{Binding PrefixedSubreddit}"
+                                   FontAttributes="Italic" />
+
+                            <Label Grid.Row="1"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   Margin="0,0,15,0"
+                                   Text="{Binding Title}" />
+
+                            <Image x:Name="Image"
+                                   Grid.Row="0"
+                                   Grid.Column="2"
+                                   Grid.RowSpan="2"
+                                   Source="{Binding Thumbnail}" />
+                            <!--IsVisible="{Binding HasThumbnail}"-->
+
+                            <Label Grid.Row="2"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   Text="{Binding Author}"
+                                   FontAttributes="Italic" />
+                        </Grid>
+                    </Custom:TappableFrame>
+                </ViewCell>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label Text="{Binding CurrentSubreddit}"
+               FontSize="Body"
+               FontAttributes="Bold"
+               Margin="20,10" />
+
+        <Custom:CustomListView x:Name="customListView"
+                               Grid.Row="1"
+                               ItemsSource="{Binding Links}"
+                               ItemTemplate="{StaticResource LinkTemplate}"
+                               HasUnevenRows="True"
+                               SeparatorVisibility="None"
+                               SelectionMode="None"
+                               LoadMoreCommand="{Binding NextLinksCommand}"
+                               IsVisible="{Binding IsBusy, Converter={ValueConverters:InvertedBoolConverter}}">
+            <ListView.Footer>
+                <BoxView BackgroundColor="White"
+                         HeightRequest="50" />
+            </ListView.Footer>
+        </Custom:CustomListView>
+
+        <Frame x:Name="ActivityIndicator"
+               Grid.Row="1"
+               IsVisible="{Binding IsBusy}"
+               AndroidSpecific:VisualElement.Elevation="5"
+               Padding="0"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               CornerRadius="25"
+               HeightRequest="50"
+               WidthRequest="50"
+               BackgroundColor="#5C1349">
+            <ActivityIndicator VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               IsRunning="True"
+                               IsVisible="True"
+                               Margin="5"
+                               Color="White" />
+        </Frame>
+    </Grid>
+</ContentView>

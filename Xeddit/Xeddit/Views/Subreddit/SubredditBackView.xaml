@@ -1,0 +1,64 @@
+﻿<?xml version="1.0"
+      encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Custom="clr-namespace:Xeddit.Custom;assembly=Xeddit"
+             xmlns:DataViewModels="clr-namespace:Xeddit.DataViewModels;assembly=Xeddit"
+             xmlns:Subreddit1="clr-namespace:Xeddit.Views.Subreddit.ViewModel;assembly=Xeddit"
+             xmlns:Fonts="clr-namespace:Xeddit.Resources.Fonts;assembly=Xeddit"
+             mc:Ignorable="d"
+             x:Name="contentView"
+             x:DataType="{x:Type Subreddit1:ISubredditPageViewModel}"
+             x:Class="Xeddit.Views.Subreddit.SubredditBackView">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label HorizontalOptions="Start"
+               VerticalOptions="Start"
+               Margin="15"
+               FontSize="20"
+               FontFamily="{x:Static Fonts:FontIcons.Solid}"
+               Text="{x:Static Fonts:FontIcons.Bars}"
+               TextColor="White">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="MenuButtonTapped" />
+            </Label.GestureRecognizers>
+        </Label>
+
+
+        <Custom:CustomListView Grid.Row="1"
+                               ItemsSource="{Binding Subreddits}"
+                               HasUnevenRows="True"
+                               SelectionMode="None">
+            <Custom:CustomListView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type DataViewModels:ISubredditViewModel}">
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Margin="10">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference contentView}, Path=BindingContext.NewSubredditCommand}"
+                                                      CommandParameter="{Binding }" 
+                                                      Tapped="ListItemTapped"/>
+                            </StackLayout.GestureRecognizers>
+
+                            <Label FontFamily="{x:Static Fonts:FontIcons.Solid}"
+                                   Text="{x:Static Fonts:FontIcons.EllipsisH}"
+                                   Padding="20,10"
+                                   FontSize="15"
+                                   TextColor="White" />
+                            <Label Text="{Binding DisplayNamePrefixed}"
+                                   Padding="10"
+                                   FontAttributes="Bold"
+                                   TextColor="White" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </Custom:CustomListView.ItemTemplate>
+        </Custom:CustomListView>
+    </Grid>
+</ContentView>

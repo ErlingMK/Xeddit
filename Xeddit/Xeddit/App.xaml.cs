@@ -1,32 +1,34 @@
 ﻿using System;
 using LightInject;
 using Xamarin.Forms;
+using Xeddit.Services;
 using Xeddit.Views;
-using TabbedPage = Xeddit.Views.TabbedPage;
+using Xeddit.Views.Comments;
+using Xeddit.Views.Front;
+using Xeddit.Views.Subreddit;
+using Xeddit.Views.Subreddit.ViewModel;
 
 namespace Xeddit
 {
     public partial class App : Application
     {
         private ServiceContainer m_container;
-        private TabbedPage m_tabbedPage;
 
         public App()
         {
             InitializeComponent();
 
             m_container = new ServiceContainer(new ContainerOptions() {EnablePropertyInjection = false});
+            m_container.RegisterInstance(typeof(IServiceContainer), m_container);
             m_container.RegisterFrom<CompositionRoot>();
 
-            //m_tabbedPage = m_container.GetInstance<TabbedPage>();
-            //TabbedPage = new NavigationPage(m_tabbedPage);
-
-            MainPage = m_container.GetInstance<TabbedPage>();
+            MainPage = m_container.GetInstance<FrontPage>();
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
-            // Handle when your app starts
+            m_container.GetInstance<INavigationService>().RegisterPages();
+            await m_container.GetInstance<ISubredditPageViewModel>().Initialize();
         }
 
         protected override void OnSleep()

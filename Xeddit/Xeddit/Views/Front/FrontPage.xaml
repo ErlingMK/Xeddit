@@ -1,0 +1,62 @@
+﻿<?xml version="1.0"
+      encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dblend="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Views="clr-namespace:Xeddit.Views;assembly=Xeddit"
+             xmlns:ViewModel="clr-namespace:Xeddit.Views.Front.ViewModel;assembly=Xeddit"
+             xmlns:Subreddit="clr-namespace:Xeddit.Views.Subreddit;assembly=Xeddit"
+             xmlns:Comments="clr-namespace:Xeddit.Views.Comments;assembly=Xeddit"
+             xmlns:Fonts="clr-namespace:Xeddit.Resources.Fonts;assembly=Xeddit"
+             mc:Ignorable="dblend"
+             dblend:DataContext="{dblend:DesignInstance ViewModel:IFrontViewModel}"
+             x:Class="Xeddit.Views.Front.FrontPage"
+             x:DataType="{x:Type ViewModel:IFrontViewModel}"
+             x:Name="contentPage">
+
+    <AbsoluteLayout x:Name="BackDropContainer">
+
+        <Views:BackDrop x:Name="CommentsBackDrop"
+                        Opacity="0"
+                        FrontLayerOffset="50"
+                        BindingContext="{Binding CommentPageViewModel}">
+            <Views:BackDrop.FrontLayerContent>
+                <Comments:CommentsFrontView />
+            </Views:BackDrop.FrontLayerContent>
+            <Views:BackDrop.BackLayerContent>
+                <Subreddit:SubredditBackView />
+            </Views:BackDrop.BackLayerContent>
+        </Views:BackDrop>
+
+        <Views:BackDrop x:Name="SubredditBackDrop"
+                        FrontLayerOffset="50"
+                        BindingContext="{Binding SubredditPageViewModel}">
+            <Views:BackDrop.FrontLayerContent>
+                <Subreddit:SubredditFrontView />
+            </Views:BackDrop.FrontLayerContent>
+            <Views:BackDrop.BackLayerContent>
+                <Subreddit:SubredditBackView />
+            </Views:BackDrop.BackLayerContent>
+        </Views:BackDrop>
+
+        <Button AbsoluteLayout.LayoutFlags="PositionProportional"
+                AbsoluteLayout.LayoutBounds="1,1"
+                Margin="20"
+                Opacity=".5"
+                HeightRequest="60"
+                WidthRequest="60"
+                CornerRadius="30"
+                BorderColor="DimGray"
+                BorderWidth="3"
+                FontSize="20"
+                BackgroundColor="#5C1349"
+                FontFamily="{x:Static Fonts:FontIcons.Solid}"
+                Text="{x:Static Fonts:FontIcons.Bars}"
+                TextColor="White"
+                Clicked="FloatingButtonClicked">
+        </Button>
+    </AbsoluteLayout>
+</ContentPage>
