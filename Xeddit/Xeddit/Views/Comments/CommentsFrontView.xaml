@@ -24,7 +24,7 @@
                 <StackLayout Orientation="Horizontal">
                     <Label Text="{Binding Ups}"
                            TextColor="Green"
-                           Padding="10"/>
+                           Padding="2"/>
                 </StackLayout>
                 <StackLayout BindableLayout.ItemsSource="{Binding Replies}"
                              BindableLayout.ItemTemplate="{StaticResource RepliesTemplate}"
@@ -42,7 +42,7 @@
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{Binding Ups}"
                                TextColor="Green"
-                               Padding="10"/>
+                               Padding="2"/>
                     </StackLayout>
                     <StackLayout BindableLayout.ItemsSource="{Binding Replies}"
                                  BindableLayout.ItemTemplate="{StaticResource RepliesTemplate}"
