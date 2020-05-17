@@ -6,6 +6,7 @@ using Xeddit.DataModels.Things;
 using Xeddit.DataModels.Things.Contracts;
 using Xeddit.DataModels.Wrappers;
 using Xeddit.DataViewModels;
+using Xeddit.DataViewModels.Contracts;
 
 namespace Xeddit.Mappers
 {
@@ -38,36 +39,29 @@ namespace Xeddit.Mappers
             }
         }
 
-        public (ILinkViewModel, IList<ICommentViewModel>) LinkWithCommentsMapper(List<ListingWrapper> comments)
+        public (ILinkViewModel, IList<ICommentGroup>) LinkWithCommentsMapper(List<ListingWrapper> comments)
         {
             var link = LinkMapper(comments.First().Data.Children);
             var commentViewModels = CommentsMapper(comments.Last().Data.Children);
             return (link.Single(), commentViewModels);
         }
 
-        public IList<ICommentViewModel> CommentsMapper(List<ThingWrapper> comments)
+        public IList<ICommentGroup> CommentsMapper(List<ThingWrapper> comments)
         {
-            var commentViewModels = new List<ICommentViewModel>();
+            var commentViewModels = new List<ICommentGroup>();
             foreach (var thingWrapper in comments)
-                if (thingWrapper.Data is JObject jObject && thingWrapper.Kind == ThingTypes.Comment)
-                {
-                    thingWrapper.Data = jObject.ToObject<Comment>();
-
-                    if (thingWrapper.Data is IComment comment)
+                if (thingWrapper.Data is JObject jObject)
+                    switch (thingWrapper.Kind)
                     {
-                        var replies = new List<ICommentViewModel>();
-                        if (comment.Replies is JObject repliesAsJObject && repliesAsJObject.ContainsKey("kind"))
-                        {
-                            replies = CommentsMapper(repliesAsJObject.ToObject<ListingWrapper>().Data.Children) as List<ICommentViewModel>;
-                        }
-
-                        commentViewModels.Add(
-                            new CommentViewModel(comment.Ups, comment.Downs, comment.Likes,
-                                comment.Created, comment.CreatedUtc, comment.Author, comment.Body, comment.LinkId,
-                                comment.ParentId, replies, comment.Score, comment.Subreddit,
-                                comment.SubredditId));
+                        case ThingTypes.Comment:
+                            thingWrapper.Data = jObject.ToObject<Comment>();
+                            CreateCommentViewModel(thingWrapper.Data, ref commentViewModels);
+                            break;
+                        case ThingTypes.More:
+                            thingWrapper.Data = jObject.ToObject<More>();
+                            CreateMoreCommentViewModel(thingWrapper.Data, ref commentViewModels);
+                            break;
                     }
-                }
 
             return commentViewModels;
         }
@@ -132,8 +126,28 @@ namespace Xeddit.Mappers
             return subredditViewModels;
         }
 
-        private void ReplyMapper(ListingWrapper replies)
+        private void CreateMoreCommentViewModel(object moreCommentsModel, ref List<ICommentGroup> commentViewModels)
         {
+            if (!(moreCommentsModel is More more)) return;
+
+            commentViewModels.Add(new MoreViewModel(more.Count, more.ParentId, more.Depth, more.Children, more.Id, more.Name));
+        }
+
+        private void CreateCommentViewModel(object commentModel, ref List<ICommentGroup> commentViewModels)
+        {
+            if (!(commentModel is IComment comment)) return;
+
+            var replies = new List<ICommentGroup>();
+            if (comment.Replies is JObject repliesAsJObject && repliesAsJObject.ContainsKey("kind"))
+                replies =
+                    CommentsMapper(repliesAsJObject.ToObject<ListingWrapper>().Data
+                        .Children) as List<ICommentGroup>;
+
+            commentViewModels.Add(
+                new CommentViewModel(comment.Ups, comment.Downs, comment.Likes,
+                    comment.Created, comment.CreatedUtc, comment.Author, comment.Body, comment.LinkId,
+                    comment.ParentId, replies, comment.Score, comment.Subreddit,
+                    comment.SubredditId));
         }
     }
 }

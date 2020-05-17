@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using Xeddit.DataModels.Things.Contracts;
+using Xeddit.DataViewModels.Contracts;
 
 namespace Xeddit.DataViewModels
 {

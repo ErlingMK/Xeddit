@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"
       encoding="UTF-8"?>
+
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -8,6 +9,7 @@
              xmlns:DataViewModels="clr-namespace:Xeddit.DataViewModels;assembly=Xeddit"
              xmlns:Subreddit1="clr-namespace:Xeddit.Views.Subreddit.ViewModel;assembly=Xeddit"
              xmlns:Fonts="clr-namespace:Xeddit.Resources.Fonts;assembly=Xeddit"
+             xmlns:contracts="clr-namespace:Xeddit.DataViewModels.Contracts;assembly=Xeddit"
              mc:Ignorable="d"
              x:Name="contentView"
              x:DataType="{x:Type Subreddit1:ISubredditPageViewModel}"
@@ -37,13 +39,14 @@
                                HasUnevenRows="True"
                                SelectionMode="None">
             <Custom:CustomListView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type DataViewModels:ISubredditViewModel}">
+                <DataTemplate x:DataType="{x:Type contracts:ISubredditViewModel}">
                     <ViewCell>
                         <StackLayout Orientation="Horizontal" Margin="10">
                             <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={x:Reference contentView}, Path=BindingContext.NewSubredditCommand}"
-                                                      CommandParameter="{Binding }" 
-                                                      Tapped="ListItemTapped"/>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={x:Reference contentView}, Path=BindingContext.NewSubredditCommand}"
+                                    CommandParameter="{Binding }"
+                                    Tapped="ListItemTapped" />
                             </StackLayout.GestureRecognizers>
 
                             <Label FontFamily="{x:Static Fonts:FontIcons.Solid}"
@@ -59,6 +62,11 @@
                     </ViewCell>
                 </DataTemplate>
             </Custom:CustomListView.ItemTemplate>
+
+            <ListView.Footer>
+                <BoxView BackgroundColor="Transparent"
+                         HeightRequest="40" />
+            </ListView.Footer>
         </Custom:CustomListView>
     </Grid>
 </ContentView>

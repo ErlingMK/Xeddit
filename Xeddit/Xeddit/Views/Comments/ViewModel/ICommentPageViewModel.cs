@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Xeddit.DataViewModels;
+using Xeddit.DataViewModels.Contracts;
 
 namespace Xeddit.Views.Comments.ViewModel
 {
@@ -9,7 +10,7 @@ namespace Xeddit.Views.Comments.ViewModel
     {
         ILinkViewModel CurrentLink { get; }
         Task Initialize(ILinkViewModel link);
-        RangeObservableCollection<ICommentViewModel> Comments { get; }
+        RangeObservableCollection<ICommentGroup> Comments { get; }
         bool IsBusy { get; }
     }
 }

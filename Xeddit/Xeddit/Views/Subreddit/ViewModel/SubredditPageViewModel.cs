@@ -11,6 +11,7 @@ using Xeddit.DataModels;
 using Xeddit.DataModels.Things;
 using Xeddit.DataModels.Things.Contracts;
 using Xeddit.DataViewModels;
+using Xeddit.DataViewModels.Contracts;
 using Xeddit.Services.Authentication.Abstractions;
 
 namespace Xeddit.Views.Subreddit.ViewModel

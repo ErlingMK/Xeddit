@@ -37,6 +37,7 @@
             <Views:BackDrop.FrontLayerContent>
                 <Subreddit:SubredditFrontView />
             </Views:BackDrop.FrontLayerContent>
+
             <Views:BackDrop.BackLayerContent>
                 <Subreddit:SubredditBackView />
             </Views:BackDrop.BackLayerContent>
@@ -45,7 +46,6 @@
         <Button AbsoluteLayout.LayoutFlags="PositionProportional"
                 AbsoluteLayout.LayoutBounds="1,1"
                 Margin="20"
-                Opacity=".5"
                 HeightRequest="60"
                 WidthRequest="60"
                 CornerRadius="30"
@@ -56,7 +56,6 @@
                 FontFamily="{x:Static Fonts:FontIcons.Solid}"
                 Text="{x:Static Fonts:FontIcons.Bars}"
                 TextColor="White"
-                Clicked="FloatingButtonClicked">
-        </Button>
+                Clicked="FloatingButtonClicked" />
     </AbsoluteLayout>
 </ContentPage>

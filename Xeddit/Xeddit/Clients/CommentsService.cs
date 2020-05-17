@@ -9,6 +9,7 @@ using Xeddit.DataModels.Things;
 using Xeddit.DataModels.Things.Contracts;
 using Xeddit.DataModels.Wrappers;
 using Xeddit.DataViewModels;
+using Xeddit.DataViewModels.Contracts;
 using Xeddit.Mappers;
 using Xeddit.Services.Http;
 
@@ -25,7 +26,7 @@ namespace Xeddit.Clients
             m_httpClient = httpFactory.Create();
         }
 
-        public async Task<(ILinkViewModel, IList<ICommentViewModel>)> GetComments(ILinkViewModel link)
+        public async Task<(ILinkViewModel, IList<ICommentGroup>)> GetComments(ILinkViewModel link)
         {
             var json = await m_httpClient.GetAsync($"/{link.PrefixedSubreddit}/comments/{link.Id}.json");
             var listings = JsonConvert.DeserializeObject<List<ListingWrapper>>(json);

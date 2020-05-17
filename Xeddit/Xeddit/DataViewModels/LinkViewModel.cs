@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Xeddit.DataViewModels.Contracts;
 
 namespace Xeddit.DataViewModels
 {

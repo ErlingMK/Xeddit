@@ -12,6 +12,7 @@
              xmlns:DataViewModels="clr-namespace:Xeddit.DataViewModels;assembly=Xeddit"
              xmlns:Front="clr-namespace:Xeddit.Views.Front;assembly=Xeddit"
              xmlns:Fonts="clr-namespace:Xeddit.Resources.Fonts;assembly=Xeddit"
+             xmlns:contracts="clr-namespace:Xeddit.DataViewModels.Contracts;assembly=Xeddit"
              mc:Ignorable="d"
              x:DataType="{x:Type Subreddit:ISubredditPageViewModel}"
              x:Name="frontView"
@@ -19,16 +20,14 @@
     <ContentView.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="LinkTemplate"
-                          x:DataType="{x:Type DataViewModels:ILinkViewModel}">
+                          x:DataType="{x:Type contracts:ILinkViewModel}">
                 <ViewCell>
                     <Custom:TappableFrame Padding="10,10,5,10"
                                           Margin="10,5"
                                           CornerRadius="10"
-                                          Tapped="FrameTapped">
-
-                        <!--Command="{Binding Source={RelativeSource AncestorType={x:Type Front:FrontPage}}, Path=BindingContext.GoToCommentsCommand}"
-                        CommandParameter="{Binding}"-->
-
+                                          Tapped="FrameTapped"
+                                          BackgroundColor="{StaticResource SecondLayerDarkTheme}">
+                        
                         <Grid x:Name="LinkGrid">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -44,17 +43,19 @@
                             <Label Grid.Row="0"
                                    Grid.Column="0"
                                    Text="{Binding Score}"
-                                   TextColor="Green" />
+                                   TextColor="{StaticResource GreenColorDarkTheme}" />
 
                             <Label Grid.Row="0"
                                    Grid.Column="1"
                                    Text="{Binding PrefixedSubreddit}"
+                                   TextColor="{StaticResource SecondaryTextColorDarkTheme}"
                                    FontAttributes="Italic" />
 
                             <Label Grid.Row="1"
                                    Grid.Column="0"
                                    Grid.ColumnSpan="2"
                                    Margin="0,0,15,0"
+                                   TextColor="{StaticResource PrimaryTextColorDarkTheme}"
                                    Text="{Binding Title}" />
 
                             <Image x:Name="Image"
@@ -68,6 +69,7 @@
                                    Grid.Column="0"
                                    Grid.ColumnSpan="2"
                                    Text="{Binding Author}"
+                                   TextColor="{StaticResource SecondaryTextColorDarkTheme}"
                                    FontAttributes="Italic" />
                         </Grid>
                     </Custom:TappableFrame>
@@ -77,33 +79,17 @@
     </ContentView.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Label Text="{Binding CurrentSubreddit}"
-               FontSize="Body"
-               FontAttributes="Bold"
-               Margin="20,10" />
-
         <Custom:CustomListView x:Name="customListView"
-                               Grid.Row="1"
                                ItemsSource="{Binding Links}"
                                ItemTemplate="{StaticResource LinkTemplate}"
+                               LoadMoreCommand="{Binding NextLinksCommand}"
                                HasUnevenRows="True"
                                SeparatorVisibility="None"
                                SelectionMode="None"
-                               LoadMoreCommand="{Binding NextLinksCommand}"
                                IsVisible="{Binding IsBusy, Converter={ValueConverters:InvertedBoolConverter}}">
-            <ListView.Footer>
-                <BoxView BackgroundColor="White"
-                         HeightRequest="50" />
-            </ListView.Footer>
         </Custom:CustomListView>
 
         <Frame x:Name="ActivityIndicator"
-               Grid.Row="1"
                IsVisible="{Binding IsBusy}"
                AndroidSpecific:VisualElement.Elevation="5"
                Padding="0"

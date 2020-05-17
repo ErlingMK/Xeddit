@@ -8,6 +8,7 @@ using Xeddit.DataModels;
 using Xeddit.DataModels.Things;
 using Xeddit.DataModels.Wrappers;
 using Xeddit.DataViewModels;
+using Xeddit.DataViewModels.Contracts;
 using Xeddit.Mappers;
 using Xeddit.Services.Http;
 

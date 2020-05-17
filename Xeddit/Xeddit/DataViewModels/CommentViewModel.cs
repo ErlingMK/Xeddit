@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Xeddit.DataModels.Wrappers;
+using Xeddit.DataViewModels.Contracts;
 
 namespace Xeddit.DataViewModels
 {
     public class CommentViewModel : ICommentViewModel
     {
-        public CommentViewModel(int? ups, int? downs, bool? likes, long? created, long? createdUtc, string author, string body, string linkId, string parentId, List<ICommentViewModel> replies, int? score, string subreddit, string subredditId)
+        public CommentViewModel(int? ups, int? downs, bool? likes, long? created, long? createdUtc, string author, string body, string linkId, string parentId, List<ICommentGroup> replies, int? score, string subreddit, string subredditId)
         {
             Ups = ups;
             Downs = downs;
@@ -31,7 +32,7 @@ namespace Xeddit.DataViewModels
         public string Body { get; }
         public string LinkId { get; }
         public string ParentId { get; }
-        public List<ICommentViewModel> Replies { get; }
+        public List<ICommentGroup> Replies { get; }
         public int? Score { get; }
         public string Subreddit { get; }
         public string SubredditId { get; }

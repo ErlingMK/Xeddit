@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xeddit.DataViewModels;
+using Xeddit.DataViewModels.Contracts;
 
 namespace Xeddit.Clients.Abstractions
 {

@@ -1,4 +1,4 @@
-﻿namespace Xeddit.DataViewModels
+﻿namespace Xeddit.DataViewModels.Contracts
 {
     public interface ILinkViewModel
     {

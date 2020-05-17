@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
-using DIPS.Xamarin.UI.Commands;
 
-namespace Xeddit.DataViewModels
+namespace Xeddit.DataViewModels.Contracts
 {
     public interface ISubredditViewModel : INotifyPropertyChanged
     {

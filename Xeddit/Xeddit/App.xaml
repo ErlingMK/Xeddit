@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -6,6 +7,18 @@
              mc:Ignorable="d"
              x:Class="Xeddit.App">
     <Application.Resources>
+
+        <Color x:Key="PrimaryColor">#5C1349</Color>
+        <Color x:Key="DarkColor">#121212</Color>
+        <Color x:Key="FirstLayerDarkTheme">#202020</Color>
+        <Color x:Key="SecondLayerDarkTheme">#303030</Color>
+        <Color x:Key="ThirdLayerDarkTheme">#404040</Color>
+
+        <Color x:Key="PrimaryTextColorDarkTheme">#ffffff</Color>
+        <Color x:Key="SecondaryTextColorDarkTheme">#D3D3D3</Color>
+
+        <Color x:Key="GreenColorDarkTheme">#00FF00</Color>
+
 
     </Application.Resources>
 </Application>

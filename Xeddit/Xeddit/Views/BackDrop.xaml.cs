@@ -30,6 +30,9 @@ namespace Xeddit.Views
             typeof(int),
             typeof(BackDrop));
 
+        public static readonly BindableProperty HeaderContentProperty =
+            BindableProperty.Create(nameof(HeaderContent), typeof(View), typeof(BackDrop));
+
         public BackDrop()
         {
             InitializeComponent();
@@ -37,20 +40,26 @@ namespace Xeddit.Views
 
         public int FrontLayerOffset
         {
-            get => (int)GetValue(FrontLayerOffsetProperty);
+            get => (int) GetValue(FrontLayerOffsetProperty);
             set => SetValue(FrontLayerOffsetProperty, value);
         }
 
         public View FrontLayerContent
         {
-            get => (View)GetValue(FrontLayerContentProperty);
+            get => (View) GetValue(FrontLayerContentProperty);
             set => SetValue(FrontLayerContentProperty, value);
         }
 
         public View BackLayerContent
         {
-            get => (View)GetValue(BackLayerContentProperty);
+            get => (View) GetValue(BackLayerContentProperty);
             set => SetValue(BackLayerContentProperty, value);
+        }
+
+        public View HeaderContent
+        {
+            get => (View) GetValue(HeaderContentProperty);
+            set => SetValue(HeaderContentProperty, value);
         }
 
         private static void ShowBackDropChanged(BindableObject bindable, object oldvalue, object newvalue)
@@ -67,26 +76,28 @@ namespace Xeddit.Views
             await Task.WhenAll(
                 FrontLayer.TranslateTo(
                     0,
-                    BackLayer.Height <= FrontLayerOffset ? FrontLayerOffset : BackLayer.Height - BackLayer.Padding.Bottom - 50,
+                    BackLayer.Height <= FrontLayerOffset
+                        ? FrontLayerOffset
+                        : BackLayer.Height - (HeaderContent?.Height ?? 30),
                     150,
                     Easing.CubicInOut),
-                Scrim.TranslateTo(
-                    0,
-                    BackLayer.Height <= FrontLayerOffset ? FrontLayerOffset : BackLayer.Height - BackLayer.Padding.Bottom - 50,
-                    150,
-                    Easing.CubicInOut));
+                Scrim.FadeTo(1, 150, Easing.CubicInOut));
+
+            Scrim.InputTransparent = false;
         }
 
         private async void HideBackLayer()
         {
             await Task.WhenAll(
                 FrontLayer.TranslateTo(0, FrontLayerOffset, 150, Easing.CubicInOut),
-                Scrim.TranslateTo(0, FrontLayerOffset, 150, Easing.CubicInOut));
+                Scrim.FadeTo(0, 150, Easing.CubicInOut));
+
+            Scrim.InputTransparent = true;
         }
 
         public static bool GetShowBackDrop(BindableObject view)
         {
-            return (bool)view.GetValue(ShowBackDropProperty);
+            return (bool) view.GetValue(ShowBackDropProperty);
         }
 
         public static void SetShowBackDrop(BindableObject view, bool value)

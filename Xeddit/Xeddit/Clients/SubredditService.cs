@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Xeddit.DataModels.Things.Contracts;
 using Xeddit.DataModels.Wrappers;
 using Xeddit.DataViewModels;
+using Xeddit.DataViewModels.Contracts;
 using Xeddit.Mappers;
 using Xeddit.Services.Http;
 using Xeddit.Views.Subreddit.ViewModel;

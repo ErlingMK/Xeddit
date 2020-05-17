@@ -7,6 +7,7 @@ using Xamarin.Forms.Xaml;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Xeddit.Custom;
 using Xeddit.DataViewModels;
+using Xeddit.DataViewModels.Contracts;
 using Xeddit.Views.Front;
 using Xeddit.Views.Front.ViewModel;
 using Xeddit.Views.Subreddit.ViewModel;

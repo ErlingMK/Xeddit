@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using DIPS.Xamarin.UI.Extensions;
 using Xeddit.Clients.Abstractions;
 using Xeddit.DataViewModels;
+using Xeddit.DataViewModels.Contracts;
 
 namespace Xeddit.Views.Comments.ViewModel
 {
@@ -27,7 +28,7 @@ namespace Xeddit.Views.Comments.ViewModel
             IsBusy = false;
         }
 
-        public RangeObservableCollection<ICommentViewModel> Comments { get; } = new RangeObservableCollection<ICommentViewModel>();
+        public RangeObservableCollection<ICommentGroup> Comments { get; } = new RangeObservableCollection<ICommentGroup>();
 
         public bool IsBusy
         {

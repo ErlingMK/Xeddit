@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using Xeddit.DataModels.Wrappers;
 
-namespace Xeddit.DataViewModels
+namespace Xeddit.DataViewModels.Contracts
 {
-    public interface ICommentViewModel
+    public interface ICommentViewModel : ICommentGroup
     {
         int? Ups { get; }
         int? Downs { get; }
@@ -14,7 +13,7 @@ namespace Xeddit.DataViewModels
         string Body { get; }
         string LinkId { get; }
         string ParentId { get; }
-        List<ICommentViewModel> Replies { get; }
+        List<ICommentGroup> Replies { get; }
         int? Score { get;  }
         string Subreddit { get;}
         string SubredditId { get; }

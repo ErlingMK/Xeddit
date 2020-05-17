@@ -1,26 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Xeddit.DataViewModels;
 using Xeddit.DataViewModels.Contracts;
 
 namespace Xeddit.Views.Comments
 {
-    class CommentsListTemplateSelector : DataTemplateSelector, IMarkupExtension
+    public class CommentTypeSelector : DataTemplateSelector, IMarkupExtension
     {
+        public DataTemplate MoreCommentsTemplate { get; set; }
+        public DataTemplate CommentsTemplate { get; set; }
+
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
-            if (item is ICommentViewModel comment)
-            {
-                if (comment.Replies.Any())
-                {
-
-                }
-            }
-            return new DataTemplate();
+            return item is IMoreViewModel ? MoreCommentsTemplate : CommentsTemplate;
         }
 
         public object ProvideValue(IServiceProvider serviceProvider)

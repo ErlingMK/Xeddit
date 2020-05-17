@@ -3,6 +3,7 @@ using System.Windows.Input;
 using DIPS.Xamarin.UI.Commands;
 using Xeddit.DataModels.Things.Contracts;
 using Xeddit.DataViewModels;
+using Xeddit.DataViewModels.Contracts;
 using Xeddit.Views.Comments;
 using Xeddit.Views.Comments.ViewModel;
 using Xeddit.Views.Subreddit.ViewModel;

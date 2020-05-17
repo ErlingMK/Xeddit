@@ -9,65 +9,159 @@
              xmlns:DataViewModels="clr-namespace:Xeddit.DataViewModels;assembly=Xeddit"
              xmlns:androidSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:viewModel="clr-namespace:Xeddit.Views.Comments.ViewModel;assembly=Xeddit"
+             xmlns:Fonts="clr-namespace:Xeddit.Resources.Fonts;assembly=Xeddit"
+             xmlns:contracts="clr-namespace:Xeddit.DataViewModels.Contracts;assembly=Xeddit"
              mc:Ignorable="d"
              x:DataType="{x:Type viewModel:ICommentPageViewModel}"
              x:Name="contentView"
              x:Class="Xeddit.Views.Comments.CommentsFrontView">
 
     <ContentView.Resources>
+        <DataTemplate x:Key="MoreCommentsTemplate">
+            <Label Text="Get some more comments!"
+                   FontSize="12"
+                   TextColor="DeepSkyBlue" />
+        </DataTemplate>
 
         <DataTemplate x:Key="RepliesTemplate"
-                      x:DataType="{x:Type DataViewModels:ICommentViewModel}">
-            <StackLayout>
+                      x:DataType="{x:Type contracts:ICommentViewModel}">
+            <Grid RowSpacing="0"
+                  BackgroundColor="{StaticResource SecondLayerDarkTheme}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!--<Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>-->
+
                 <Label Text="{Binding Body}"
-                       Margin="10" />
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding Ups}"
-                           TextColor="Green"
-                           Padding="2"/>
-                </StackLayout>
-                <StackLayout BindableLayout.ItemsSource="{Binding Replies}"
-                             BindableLayout.ItemTemplate="{StaticResource RepliesTemplate}"
-                             Padding="15,0,0,0" />
-            </StackLayout>
+                       TextColor="{StaticResource PrimaryTextColorDarkTheme}"
+                       Margin="10,0"/>
+
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Text="{Binding Author}"
+                       TextColor="{StaticResource SecondaryTextColorDarkTheme}"
+                       FontAttributes="Italic"
+                       FontSize="12"
+                       Margin="10,0"/>
+
+                <!--<Label Grid.Row="1"
+                       Margin="15,0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{x:Static Fonts:FontIcons.ArrowUp}"
+                                  FontFamily="{x:Static Fonts:FontIcons.Solid}"
+                                  FontSize="14"
+                                  TextColor="#ff4500" />
+
+                            <Span Text="  " />
+
+                            <Span Text="{Binding Score}"
+                                  TextColor="White" />
+
+                            <Span Text="  " />
+
+                            <Span Text="{x:Static Fonts:FontIcons.ArrowDown}"
+                                  FontFamily="{x:Static Fonts:FontIcons.Solid}"
+                                  FontSize="14"
+                                  TextColor="#7193ff" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>-->
+
+                <StackLayout Grid.Row="2"
+                             x:DataType="{x:Type contracts:ICommentViewModel}"
+                             BindableLayout.ItemsSource="{Binding Replies}"
+                             BindableLayout.ItemTemplateSelector="{Comments:ReplyTypeSelector MoreCommentsTemplate={StaticResource MoreCommentsTemplate}, RepliesTemplate={StaticResource RepliesTemplate}}"
+                             Spacing="0" 
+                             Margin="15,0,0,0"/>
+
+                <BoxView WidthRequest="1"
+                         BackgroundColor="{StaticResource ThirdLayerDarkTheme}"
+                         HorizontalOptions="Start"
+                         Grid.Row="0"
+                         Grid.RowSpan="3" />
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="CommentsTemplate"
-                      x:DataType="{x:Type DataViewModels:ICommentViewModel}">
-            <ViewCell>
-                <StackLayout>
+                      x:DataType="{x:Type contracts:ICommentViewModel}">
+            <Frame CornerRadius="8"
+                   Padding="10"
+                   BackgroundColor="{StaticResource SecondLayerDarkTheme}">
+                <StackLayout Spacing="0">
                     <Label Text="{Binding Body}"
-                           Padding="10"
-                           BackgroundColor="LightBlue" />
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="{Binding Ups}"
-                               TextColor="Green"
-                               Padding="2"/>
-                    </StackLayout>
-                    <StackLayout BindableLayout.ItemsSource="{Binding Replies}"
-                                 BindableLayout.ItemTemplate="{StaticResource RepliesTemplate}"
-                                 Padding="10,0,0,0" />
+                           TextColor="{StaticResource PrimaryTextColorDarkTheme}" />
+
+                    <Label Text="{Binding Author}"
+                           TextColor="{StaticResource SecondaryTextColorDarkTheme}"
+                           FontAttributes="Italic"
+                           FontSize="12"/>
+
+                    <!--<Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{x:Static Fonts:FontIcons.ArrowUp}"
+                                      FontFamily="{x:Static Fonts:FontIcons.Solid}"
+                                      FontSize="14"
+                                      TextColor="#ff4500" />
+
+                                <Span Text="  " />
+
+                                <Span Text="{Binding Score}"
+                                      TextColor="White" />
+
+                                <Span Text="  " />
+
+                                <Span Text="{x:Static Fonts:FontIcons.ArrowDown}"
+                                      FontFamily="{x:Static Fonts:FontIcons.Solid}"
+                                      FontSize="14"
+                                      TextColor="#7193ff" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>-->
+
+                    <StackLayout x:DataType="{x:Type contracts:ICommentViewModel}"
+                                 BindableLayout.ItemsSource="{Binding Replies}"
+                                 BindableLayout.ItemTemplateSelector="{Comments:ReplyTypeSelector MoreCommentsTemplate={StaticResource MoreCommentsTemplate}, RepliesTemplate={StaticResource RepliesTemplate}}"
+                                 Spacing="0"
+                                 Margin="15,0,0,0"/>
                 </StackLayout>
-            </ViewCell>
+            </Frame>
         </DataTemplate>
 
 
     </ContentView.Resources>
-    <Grid>
+    <Grid RowSpacing="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="{Binding Source={x:Reference contentView}, Path=LinkTitleFrame.Height}" />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <ContentView Grid.Row="0"
                      Content="{Binding Source={x:Reference contentView}, Path=LinkTitleFrame}"
                      HeightRequest="{Binding Source={x:Reference contentView}, Path=LinkTitleFrame.Height}" />
 
-        <ListView Grid.Row="1"
-                  ItemsSource="{Binding Comments}"
-                  ItemTemplate="{StaticResource CommentsTemplate}"
-                  HasUnevenRows="True"
-                  CachingStrategy="RecycleElement" />
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Comments}"
+                        ItemTemplate="{Comments:CommentTypeSelector CommentsTemplate={StaticResource CommentsTemplate}, MoreCommentsTemplate={StaticResource MoreCommentsTemplate}}"
+                        SelectionMode="None"
+                        Margin="5,0"
+                        ItemSizingStrategy="MeasureAllItems">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.Footer>
+                <BoxView HeightRequest="50" />
+            </CollectionView.Footer>
+        </CollectionView>
 
         <Frame x:Name="ActivityIndicator"
                Grid.Row="1"
