@@ -11,6 +11,7 @@
              xmlns:Subreddit="clr-namespace:Xeddit.Views.Subreddit;assembly=Xeddit"
              xmlns:Comments="clr-namespace:Xeddit.Views.Comments;assembly=Xeddit"
              xmlns:Fonts="clr-namespace:Xeddit.Resources.Fonts;assembly=Xeddit"
+             xmlns:custom="clr-namespace:Xeddit.Custom;assembly=Xeddit"
              mc:Ignorable="dblend"
              dblend:DataContext="{dblend:DesignInstance ViewModel:IFrontViewModel}"
              x:Class="Xeddit.Views.Front.FrontPage"
@@ -43,19 +44,30 @@
             </Views:BackDrop.BackLayerContent>
         </Views:BackDrop>
 
-        <Button AbsoluteLayout.LayoutFlags="PositionProportional"
-                AbsoluteLayout.LayoutBounds="1,1"
-                Margin="20"
-                HeightRequest="60"
-                WidthRequest="60"
-                CornerRadius="30"
-                BorderColor="DimGray"
-                BorderWidth="3"
-                FontSize="20"
-                BackgroundColor="#5C1349"
-                FontFamily="{x:Static Fonts:FontIcons.Solid}"
-                Text="{x:Static Fonts:FontIcons.Bars}"
-                TextColor="White"
-                Clicked="FloatingButtonClicked" />
+        <custom:FloatingButton AbsoluteLayout.LayoutFlags="PositionProportional"
+                               AbsoluteLayout.LayoutBounds=".95,.95"
+                               Clicked="FloatingButtonClicked">
+            <custom:FloatingButton.Buttons>
+                <!--<Button Text="Hot"
+                        HeightRequest="60"
+                        WidthRequest="60"
+                        CornerRadius="30"
+                        TextColor="White"
+                        BackgroundColor="#5C1349" />
+                <Button Text="New"
+                        TextColor="White"
+                        HeightRequest="60"
+                        WidthRequest="60"
+                        CornerRadius="30"
+                        BackgroundColor="#6C2359" />
+                <Button Text="Top"
+                        HeightRequest="60"
+                        WidthRequest="60"
+                        CornerRadius="30"
+                        TextColor="White"
+                        BackgroundColor="#5C1349" />-->
+            </custom:FloatingButton.Buttons>
+
+        </custom:FloatingButton>
     </AbsoluteLayout>
 </ContentPage>

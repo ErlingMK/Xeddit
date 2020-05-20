@@ -150,7 +150,6 @@
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding Comments}"
                         ItemTemplate="{Comments:CommentTypeSelector CommentsTemplate={StaticResource CommentsTemplate}, MoreCommentsTemplate={StaticResource MoreCommentsTemplate}}"
-                        SelectionMode="None"
                         Margin="5,0"
                         ItemSizingStrategy="MeasureAllItems">
             <CollectionView.ItemsLayout>
@@ -158,9 +157,9 @@
                                    ItemSpacing="10" />
             </CollectionView.ItemsLayout>
 
-            <CollectionView.Footer>
+            <!--<CollectionView.Footer>
                 <BoxView HeightRequest="50" />
-            </CollectionView.Footer>
+            </CollectionView.Footer>-->
         </CollectionView>
 
         <Frame x:Name="ActivityIndicator"

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xeddit.Custom;
 using Xeddit.DataViewModels;
 using Xeddit.Resources.Fonts;
 using Xeddit.Views.Comments;
@@ -41,6 +42,7 @@ namespace Xeddit.Views.Front
                     await CommentsBackDrop.FadeTo(0, 150);
                     await SubredditBackDrop.FrontLayerContent.FadeTo(1, 150);
                     BackDropContainer.LowerChild(CommentsBackDrop);
+                    SubredditBackDrop.FrontLayerContent.InputTransparent = false;
                     break;
                 case ICommentPageViewModel _:
                     await SubredditBackDrop.FrontLayerContent.FadeTo(0, 150);
@@ -70,9 +72,9 @@ namespace Xeddit.Views.Front
 
         private void FloatingButtonClicked(object sender, EventArgs e)
         {
-            if (!(sender is Button button)) return;
+            if (!(sender is FloatingButton button)) return;
             BackDrop.SetShowBackDrop(SubredditBackDrop, !BackDrop.GetShowBackDrop(SubredditBackDrop));
-            RunAnimation(button, !BackDrop.GetShowBackDrop(SubredditBackDrop));
+            //RunAnimation(button, !BackDrop.GetShowBackDrop(SubredditBackDrop));
         }
 
         private static void RunAnimation(Button button, bool backDropShowing)

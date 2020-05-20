@@ -24,8 +24,9 @@ namespace Xeddit.Views.Subreddit
             InitializeComponent();
         }
 
-        private async void FrameTapped(object sender, FrameTappedEventArgs e)
+        private void FrameTapped(object sender, FrameTappedEventArgs e)
         {
+            InputTransparent = true;
             if (sender is Frame frame)
             {
                 var resource = Resources["LinkTemplate"];
@@ -40,6 +41,7 @@ namespace Xeddit.Views.Subreddit
 
                 var image = (frame.Content as Grid).FindByName<Image>("Image").Width;
                 var tappableFrame = viewCellView as TappableFrame;
+                tappableFrame.Tapped -= FrameTapped;
                 var grid = tappableFrame.Content as Grid;
                 grid.ColumnDefinitions[2].Width = image;
 
